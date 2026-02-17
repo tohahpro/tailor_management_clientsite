@@ -1,18 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useActionState, useEffect, useState } from "react";
-
-
 import Link from "next/link";
 import { loginUser } from "@/services/auth/loginUser";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "./PasswordInput";
-import { Button } from "@/components/ui/button";
 import { SocialButtons } from "./SocialButtons";
 import { toast } from "sonner";
+import SubmitButton from "@/components/shared/SubmitButton";
 
 
 export function LoginForm() {
@@ -104,16 +101,12 @@ export function LoginForm() {
         </div>
 
         {/* Submit Button */}
-        <Button
+        <SubmitButton
           type="submit"
-          disabled={isPending}
-          className="w-full h-11 rounded-lg cursor-pointer
-                       bg-gradient-to-r from-[#974fef] to-[#7640b8] hover:text-white/70
-                       hover:from-[#974fef] hover:to-[#7640b8] hover:shadow-xl
-                       text-white font-semibold transition-all duration-200 shadow-lg active:scale-[0.98]"
-        >
-          {isPending ? "Logging in..." : "Login"}
-        </Button>
+          isLoading={isPending}
+          loadingText="Logging in..."
+          title="Login"
+        />
       </form>
 
       {/* Footer */}
@@ -127,7 +120,7 @@ export function LoginForm() {
           <div className="flex-1 h-px bg-white/20 lg:bg-black/20"></div>
         </div>
         <SocialButtons />
-        <div className="text-center text-sm text-white/70 lg:text-black/60">
+        <FieldDescription className="text-center text-sm text-white/70 lg:text-black/60">
           {`Don't have an account?`}{" "}
           <Link
             href='/register'
@@ -135,7 +128,15 @@ export function LoginForm() {
           >
             Sign Up
           </Link>
-        </div>
+        </FieldDescription>
+        <FieldDescription className="px-6 text-center">
+          <Link
+            href="/forgot-password"
+            className="text-[#b480f7] lg:text-[#904be2]/90 underline hover:text-indigo-300 font-medium"
+          >
+            Forgot password?
+          </Link>
+        </FieldDescription>
       </div>
 
     </div>

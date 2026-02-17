@@ -10,6 +10,9 @@ import { usePathname } from "next/navigation";
 import { UserInfo } from "../../../../types/user.interface";
 import { NavSection } from "../../../../types/dashboard.interface";
 import BrandLogo from "@/components/shared/BrandLogo";
+import { logoutUser } from "@/services/auth/logout";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 
 
 
@@ -27,13 +30,17 @@ const DashboardSidebarContent = ({
 
     const pathname = usePathname()
 
+    const handleLogout = async () => {
+        await logoutUser();
+    };
+
     return (
         <div>
             <div className="hidden md:flex h-full w-64 flex-col border-r bg-card">
                 {/* Logo/Brand */}
                 <div className="flex h-16 items-center border-b px-6">
                     <Link href={dashboardHome}>
-                        <BrandLogo/>
+                        <BrandLogo />
                     </Link>
                 </div>
 
@@ -89,7 +96,7 @@ const DashboardSidebarContent = ({
                 {/* User Info at Bottom */}
                 <div className="border-t p-4">
                     <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <span className="text-sm font-semibold text-primary">
                                 {
                                     userInfo.admin?.name.charAt(0).toUpperCase() ||
@@ -103,10 +110,24 @@ const DashboardSidebarContent = ({
                                     userInfo.admin?.name || userInfo.tailor?.name
                                 }
                             </p>
+                            <p className="text-xs text-muted-foreground">{userInfo.email}</p>
                             <p className="text-xs text-muted-foreground capitalize">
                                 {userInfo.role.toLowerCase()}
                             </p>
                         </div>
+                    </div>
+                </div>
+                <div className="pb-2 px-4">
+                    <div className="flex items-center gap-3">
+                        <p
+                            onClick={handleLogout}
+                            className="cursor-pointer text-red-600 w-full p-0"
+                        >
+                            <Button className="cursor-pointer w-full" variant={"outline"} onClick={handleLogout}>
+                                <LogOut className="w-4 h-4" />
+                                Logout
+                            </Button>
+                        </p>
                     </div>
                 </div>
             </div>
