@@ -1,7 +1,7 @@
 import Image from "next/image";
-import TailorLogin from "../../../../assets/images/login.jpg";
+import TailorLogin from "@/assets/images/login.jpg";
 import { LoginForm } from "@/components/moduels/auth/LoginForm";
-import BrandLogo from "@/shared/BrandLogo";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 
 const LoginPage = () => {

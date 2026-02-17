@@ -69,7 +69,7 @@ export function LoginForm() {
               type="email"
               placeholder="m@example.com"
               className="h-11 rounded-lg bg-white/10 border border-white/10 lg:border-[#393737]/10
-                        text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                        text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                         focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
             />
             {getFieldError("email") && (
@@ -90,7 +90,7 @@ export function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="********"
               className="h-11 rounded-lg bg-white/10 border border-white/20 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
             />
 
@@ -107,9 +107,9 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full h-11 rounded-lg 
-                       bg-gradient-to-r from-[#974fef] to-[#7640b8]
-                       hover:from-[#974fef] hover:to-[#7640b8]
+          className="w-full h-11 rounded-lg cursor-pointer
+                       bg-gradient-to-r from-[#974fef] to-[#7640b8] hover:text-white/70
+                       hover:from-[#974fef] hover:to-[#7640b8] hover:shadow-xl
                        text-white font-semibold transition-all duration-200 shadow-lg active:scale-[0.98]"
         >
           {isPending ? "Logging in..." : "Login"}

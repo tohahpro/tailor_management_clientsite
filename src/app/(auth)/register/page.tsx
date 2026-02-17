@@ -1,7 +1,7 @@
 import Image from "next/image";
-import TailorRegister from "../../../../assets/images/register.jpg";
-import BrandLogo from "@/shared/BrandLogo";
+import TailorRegister from "@/assets/images/register.jpg";
 import { RegisterForm } from "@/components/moduels/auth/RegisterForm";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 
 const RegisterPage = () => {
@@ -40,7 +40,7 @@ const RegisterPage = () => {
                     </div>
 
                     <div className="flex flex-1 items-center justify-center">
-                        <div className="w-full max-w-lg lg:max-w-full">
+                        <div className="w-full max-w-xl lg:max-w-full">
                             <RegisterForm />
                         </div>
                     </div>

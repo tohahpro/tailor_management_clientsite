@@ -18,7 +18,7 @@ const registerValidationZodSchema = z.object({
         error: "Confirm Password is required and must be at least 6 character long"
     }),
 }).refine((data: any) => data.password === data.confirmPassword, {
-    error: "Passwords do not match",
+    error: "Confirm Passwords do not match",
     path: ["confirmPassword"]
 });
 

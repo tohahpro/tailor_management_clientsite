@@ -53,9 +53,9 @@ export function RegisterForm() {
                 </p>
             </div>
 
-            <form action={formAction} className="space-y-4 max-w-lg mx-auto">
+            <form action={formAction} className="space-y-2.5 max-w-xl mx-auto">
 
-                <div className="gap-4 space-y-2 md:grid grid-cols-2">
+                <div className="gap-4 space-t-2 md:grid grid-cols-2">
                     {/* Name */}
                     <Field className="">
                         <FieldLabel className="text-white/80 lg:text-black lg:text-black">
@@ -65,7 +65,7 @@ export function RegisterForm() {
                             name="name"
                             placeholder="John Doe"
                             className="h-11 rounded-lg bg-white/10 border border-white/10 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
                         {getFieldError("name") && (
@@ -85,7 +85,7 @@ export function RegisterForm() {
                             type="email"
                             placeholder="m@example.com"
                             className="h-11 rounded-lg bg-white/10 border border-white/10 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
                         {getFieldError("email") && (
@@ -102,9 +102,9 @@ export function RegisterForm() {
                         </FieldLabel>
                         <Input
                             name="contactNumber"                            
-                            placeholder="+088******"
+                            placeholder="+880******"
                             className="h-11 rounded-lg bg-white/10 border border-white/10 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
                         {getFieldError("contactNumber") && (
@@ -123,7 +123,7 @@ export function RegisterForm() {
                             name="storeName"
                             placeholder="example @store"
                             className="h-11 rounded-lg bg-white/10 border border-white/10 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
                         {getFieldError("storeName") && (
@@ -144,7 +144,7 @@ export function RegisterForm() {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="********"
                             className="h-11 rounded-lg bg-white/10 border border-white/20 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
 
@@ -166,7 +166,7 @@ export function RegisterForm() {
                             onChange={(e) => setcomfirmPassword(e.target.value)}
                             placeholder="********"
                             className="h-11 rounded-lg bg-white/10 border border-white/20 lg:border-[#393737]/10
-                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black
+                               text-white lg:text-black placeholder:text-white/40 lg:placeholder:text-black/40
                                focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         />
                         {getFieldError("confirmPassword") && (
@@ -182,9 +182,9 @@ export function RegisterForm() {
                 <Button
                     type="submit"
                     disabled={isPending}
-                    className="w-full h-11 rounded-lg 
-                       bg-gradient-to-r from-[#974fef] to-[#7640b8]
-                       hover:from-[#974fef] hover:to-[#7640b8]
+                    className="w-full h-11 rounded-lg cursor-pointer
+                       bg-gradient-to-r from-[#974fef] to-[#7640b8] hover:text-white/70
+                       hover:from-[#974fef] hover:to-[#7640b8] hover:shadow-xl
                        text-white font-semibold transition-all duration-200 shadow-lg active:scale-[0.98]"
                 >
                     {isPending ? "Creating..." : "Create Account"}
@@ -192,7 +192,7 @@ export function RegisterForm() {
             </form>
 
             {/* Footer */}
-            <div className="max-w-lg mx-auto space-y-2">
+            <div className="max-w-xl mx-auto space-y-2">
                 {/* Divider */}
                 <div className="flex items-center gap-1">
                     <div className="flex-1 h-px bg-white/20 lg:bg-black/20"></div>
