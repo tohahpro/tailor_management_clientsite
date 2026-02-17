@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import SubmitButton from "@/components/shared/SubmitButton";
 
 
-export function LoginForm() {
+export function LoginForm({ redirect }: { redirect?: string }) {
 
   const [state, formAction, isPending] = useActionState(loginUser, null);
   const [password, setPassword] = useState("");
@@ -54,7 +54,9 @@ export function LoginForm() {
       </div>
 
       <form action={formAction} className="space-y-4 max-w-md mx-auto">
-
+        {
+          redirect && <input type="hidden" name="redirect" value={redirect} />
+        }
         <div className="gap-4 space-y-2">
           {/* Email */}
           <Field className="">

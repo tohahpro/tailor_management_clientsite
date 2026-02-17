@@ -2,9 +2,14 @@ import Image from "next/image";
 import TailorLogin from "@/assets/images/login.jpg";
 import { LoginForm } from "@/components/moduels/auth/LoginForm";
 import BrandLogo from "@/components/shared/BrandLogo";
+import Link from "next/link";
 
 
-const LoginPage = () => {
+const LoginPage = async(
+    { searchParams } : { searchParams?: Promise<{ redirect?: string }> }
+) => {
+
+    const params = await searchParams || {}
 
     return (
         <>
@@ -24,13 +29,13 @@ const LoginPage = () => {
 
                 {/* ✅ Left Side Image (Large Device) */}             
                 <div className="flex flex-col gap-4 p-6 md:p-10 bg-white/30 lg:bg-background backdrop-blur-xs">
-                    <div className="flex justify-center gap-2 md:justify-start">
+                    <Link href='/' className="flex justify-center gap-2 md:justify-start">
                         <BrandLogo />
-                    </div>
+                    </Link>
 
                     <div className="flex flex-1 items-center justify-center">
                         <div className="w-full max-w-md lg:max-w-full">
-                            <LoginForm />
+                            <LoginForm redirect={params.redirect} />
                         </div>
                     </div>
                 </div>
