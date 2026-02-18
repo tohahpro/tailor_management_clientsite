@@ -1,138 +1,246 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { getIconComponent } from "@/lib/icon-mapper";
-import { usePathname } from "next/navigation";
-import { UserInfo } from "../../../../types/user.interface";
-import { NavSection } from "../../../../types/dashboard.interface";
-import BrandLogo from "@/components/shared/BrandLogo";
-import { logoutUser } from "@/services/auth/logout";
-import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { getIconComponent } from "@/lib/icon-mapper"
+import { logoutUser } from "@/services/auth/logout"
 
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
+import { LogOut, PanelLeft } from "lucide-react"
+
+import BrandLogo from "@/components/shared/BrandLogo"
+import { UserInfo } from "../../../../types/user.interface"
+import { NavSection } from "../../../../types/dashboard.interface"
 
 interface DashboardSidebarContentProps {
-    userInfo: UserInfo;
-    navItems: NavSection[];
-    dashboardHome: string;
+    userInfo: UserInfo
+    navItems: NavSection[]
+    dashboardHome: string
 }
 
 const DashboardSidebarContent = ({
     userInfo,
     navItems,
-    dashboardHome
+    dashboardHome,
 }: DashboardSidebarContentProps) => {
-
     const pathname = usePathname()
+    const [isCollapsed, setIsCollapsed] = useState(false)
 
     const handleLogout = async () => {
-        await logoutUser();
-    };
+        await logoutUser()
+    }
+
+    const displayName =
+        userInfo?.admin?.name || userInfo?.tailor?.name || "User"
+
+    const initial = displayName.charAt(0).toUpperCase()
 
     return (
-        <div>
-            <div className="hidden md:flex h-full w-64 flex-col border-r bg-card">
-                {/* Logo/Brand */}
-                <div className="flex h-16 items-center border-b px-6">
-                    <Link href={dashboardHome}>
-                        <BrandLogo />
+        <TooltipProvider delayDuration={100}>
+            <div
+                className={cn(
+                    "relative flex flex-col h-screen border-r bg-card transition-all duration-300",
+                    isCollapsed ? "w-15" : "w-62"
+                )}
+            >
+                {/* Collapse Toggle */}
+                <div className="absolute -right-3 top-4 z-20">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-6 w-6 rounded-full shadow-md bg-background"
+                        onClick={() => setIsCollapsed(!isCollapsed)}
+                    >
+                        <PanelLeft className="h-3 w-3" />
+                    </Button>
+                </div>
+
+                {/* Logo */}
+                <div
+                    className={cn(
+                        "flex items-center h-14 border-b px-3",
+                        isCollapsed ? "justify-center" : "justify-between"
+                    )}
+                >
+                    <Link href={dashboardHome} className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                            TD
+                        </div>
+                        {!isCollapsed && <BrandLogo />}
                     </Link>
                 </div>
 
                 {/* Navigation */}
-                <ScrollArea className="flex-1 px-3 py-4">
-                    <nav className="space-y-6">
+                <ScrollArea className="flex-1 py-4">
+                    <div className="px-2 space-y-6">
                         {navItems.map((section, sectionIdx) => (
                             <div key={sectionIdx}>
-                                {section.title && (
-                                    <h4 className="mb-2 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                                {!isCollapsed && section.title && (
+                                    <h4 className="mb-2 px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                         {section.title}
                                     </h4>
                                 )}
+
                                 <div className="space-y-1">
-                                    {section.items.map((item) => {
-                                        const isActive = pathname === item.href;
-                                        const Icon = getIconComponent(item.icon);
+                                    {section.items.map((item: any) => {
+                                        const isActive =
+                                            pathname === item.href
 
+                                        const Icon = getIconComponent(item.icon)
 
-                                        return (
+                                        const navLink = (
                                             <Link
-                                                key={item.href}
                                                 href={item.href}
                                                 className={cn(
                                                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
                                                     isActive
-                                                        ? "bg-primary text-primary-foreground"
-                                                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                                                        ? "bg-[#c8aee7] text-black"
+                                                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                                                    isCollapsed && "justify-center"
                                                 )}
                                             >
-                                                <Icon className="h-4 w-4" />
-                                                <span className="flex-1">{item.title}</span>
-                                                {item.badge && (
-                                                    <Badge
-                                                        variant={isActive ? "secondary" : "default"}
-                                                        className="ml-auto"
-                                                    >
-                                                        {item.badge}
-                                                    </Badge>
+                                                <Icon className="h-4 w-4 shrink-0" />
+
+                                                {!isCollapsed && (
+                                                    <>
+                                                        <span className="flex-1 truncate">
+                                                            {item.title}
+                                                        </span>
+                                                        {item.badge && (
+                                                            <Badge
+                                                                className={cn(
+                                                                    isActive
+                                                                        ? "bg-[#F0E4FF] border-transparent hover:bg-[#F0E4FF]"
+                                                                        : ""
+                                                                )}
+                                                                variant="outline"
+                                                            >
+                                                                {item.badge}
+                                                            </Badge>
+                                                        )}
+                                                    </>
                                                 )}
                                             </Link>
-                                        );
+                                        )
+
+                                        return isCollapsed ? (
+                                            <Tooltip key={item.href}>
+                                                <TooltipTrigger asChild>
+                                                    {navLink}
+                                                </TooltipTrigger>
+                                                <TooltipContent
+                                                    side="right"
+                                                    className="bg-[#F0E4FF] fill-[#F0E4FF] text-black"
+                                                >
+                                                    {item.title}
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        ) : (
+                                            <div key={item.href}>{navLink}</div>
+                                        )
                                     })}
                                 </div>
+
                                 {sectionIdx < navItems.length - 1 && (
                                     <Separator className="my-4" />
                                 )}
                             </div>
                         ))}
-                    </nav>
+                    </div>
                 </ScrollArea>
 
-                {/* User Info at Bottom */}
-                <div className="border-t p-4">
-                    <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="text-sm font-semibold text-primary">
-                                {
-                                    userInfo.admin?.name.charAt(0).toUpperCase() ||
-                                    userInfo.tailor?.name.charAt(0).toUpperCase()
-                                }
-                            </span>
+                {/* User Info + Logout */}
+                <div className="border-t p-3 space-y-3">
+                    {isCollapsed ? (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div className="flex justify-center cursor-pointer">
+                                    <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+                                        <span className="text-sm font-semibold text-primary">
+                                            {initial}
+                                        </span>
+                                    </div>
+                                </div>
+                            </TooltipTrigger>
+
+                            <TooltipContent side="right" className="w-fit px-5 bg-[#F0E4FF] fill-[#F0E4FF]">
+                                <div className="space-y-1">
+                                    <p className="text-sm font-medium text-black">
+                                        {displayName}
+                                    </p>
+                                    <p className="text-xs text-muted-foreground font-medium">
+                                        {userInfo?.email}
+                                    </p>
+                                    <p className="text-xs text-muted-foreground font-medium capitalize">
+                                        {userInfo?.role?.toLowerCase()}
+                                    </p>
+                                </div>
+                            </TooltipContent>
+                        </Tooltip>
+                    ) : (
+                        <div className="flex items-center gap-3">
+                            <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span className="text-sm font-semibold text-primary">
+                                    {initial}
+                                </span>
+                            </div>
+
+                            <div className="flex-1 overflow-hidden">
+                                <p className="text-sm font-medium truncate">
+                                    {displayName}
+                                </p>
+                                <p className="text-xs text-muted-foreground truncate">
+                                    {userInfo?.email}
+                                </p>
+                                <p className="text-xs text-muted-foreground capitalize">
+                                    {userInfo?.role?.toLowerCase()}
+                                </p>
+                            </div>
                         </div>
-                        <div className="flex-1 overflow-hidden">
-                            <p className="text-sm font-medium truncate">
-                                {
-                                    userInfo.admin?.name || userInfo.tailor?.name
-                                }
-                            </p>
-                            <p className="text-xs text-muted-foreground">{userInfo.email}</p>
-                            <p className="text-xs text-muted-foreground capitalize">
-                                {userInfo.role.toLowerCase()}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="pb-2 px-4">
-                    <div className="flex items-center gap-3">
-                        <p
-                            onClick={handleLogout}
-                            className="cursor-pointer text-red-600 w-full p-0"
-                        >
-                            <Button className="cursor-pointer w-full" variant={"outline"} onClick={handleLogout}>
-                                <LogOut className="w-4 h-4" />
+                    )}
+
+                    {isCollapsed ? (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="w-full justify-center px-0 text-red-600"
+                                    onClick={handleLogout}
+                                >
+                                    <LogOut className="h-4 w-4" />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="right" className="bg-[#F0E4FF] fill-[#F0E4FF] text-black font-medium">
                                 Logout
-                            </Button>
-                        </p>
-                    </div>
+                            </TooltipContent>
+                        </Tooltip>
+                    ) : (
+                        <Button
+                            variant="outline"
+                            className="w-full justify-start text-red-500"
+                            onClick={handleLogout}
+                        >
+                            <LogOut className="h-4 w-4" />
+                            <span className="ml-2">Logout</span>
+                        </Button>
+                    )}
                 </div>
             </div>
-        </div>
-    );
-};
+        </TooltipProvider>
+    )
+}
 
-export default DashboardSidebarContent;
+export default DashboardSidebarContent

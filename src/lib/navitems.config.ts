@@ -58,7 +58,7 @@ export const tailorNavItems: NavSection[] = [
             },
             {
                 title: 'Cloth Category',
-                href: '/cloth-category',
+                href: '/dashboard/cloth-category',
                 icon: 'ClipboardList',
                 roles: ['TAILOR']
             },
