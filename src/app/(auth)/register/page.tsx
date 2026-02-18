@@ -3,6 +3,7 @@ import TailorRegister from "@/assets/images/register.jpg";
 import { RegisterForm } from "@/components/moduels/auth/RegisterForm";
 import BrandLogo from "@/components/shared/BrandLogo";
 import Link from "next/link";
+import BackgroundAnimatedBlur from "@/components/shared/BackgroundAnimatedBlur";
 
 
 const RegisterPage = () => {
@@ -21,6 +22,7 @@ const RegisterPage = () => {
                         className="object-cover"
                     />
                     <div className="absolute inset-0 bg-black/60" /> {/* overlay */}
+                    <BackgroundAnimatedBlur />
                 </div>
 
                 {/* ✅ Left Side Image (Large Device) */}

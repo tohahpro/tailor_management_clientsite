@@ -38,7 +38,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 
   return (
     <div className="mx-auto w-full space-y-4 
-                bg-black/50 lg:bg-transparent backdrop-blur-2xl 
+                bg-black/60 lg:bg-transparent backdrop-blur-2xl 
                 rounded-2xl p-6 sm:p-8 
                 border-white/20 shadow-2xl lg:shadow-none">
 

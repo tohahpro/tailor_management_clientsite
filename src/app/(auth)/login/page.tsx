@@ -3,6 +3,7 @@ import TailorLogin from "@/assets/images/login.jpg";
 import { LoginForm } from "@/components/moduels/auth/LoginForm";
 import BrandLogo from "@/components/shared/BrandLogo";
 import Link from "next/link";
+import BackgroundAnimatedBlur from "@/components/shared/BackgroundAnimatedBlur";
 
 
 const LoginPage = async(
@@ -25,6 +26,7 @@ const LoginPage = async(
                         className="object-cover"
                     />
                     <div className="absolute inset-0 bg-black/60" /> {/* overlay */}
+                    <BackgroundAnimatedBlur />
                 </div>
 
                 {/* ✅ Left Side Image (Large Device) */}             
