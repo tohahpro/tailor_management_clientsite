@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Calendar, Ruler, Shirt } from "lucide-react";
 import { format } from "date-fns";
 import { IClothCategory } from "../../../../../types/category.interface";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface ICategoryViewDetailDialogProps {
     open: boolean;
@@ -39,17 +40,19 @@ const CategoryViewDetailDialog = ({
                     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 p-6 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-950 dark:to-indigo-950 rounded-xl">
 
                         {/* Image / Icon */}
-                        {category.image ? (
-                            <img
-                                src={category.image}
-                                alt={category.name}
-                                className="h-24 w-24 rounded-xl object-cover shadow-md"
-                            />
-                        ) : (
-                            <div className="h-24 w-24 rounded-xl bg-white dark:bg-muted flex items-center justify-center shadow-md">
-                                <Shirt className="h-10 w-10 text-purple-600" />
-                            </div>
-                        )}
+                        <Avatar className="h-32 w-32 rounded-xl shadow-md">
+                            {category.image ? (
+                                <AvatarImage
+                                    src={category.image}
+                                    alt={category.name}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <AvatarFallback className="bg-white dark:bg-muted flex items-center justify-center">
+                                    <Shirt className="h-10 w-10 text-purple-600" />
+                                </AvatarFallback>
+                            )}
+                        </Avatar>
 
                         <div className="flex-1 text-center sm:text-left">
                             <h2 className="text-3xl font-bold mb-2">

@@ -40,6 +40,7 @@ const CategoryEditFormDialog = ({
     });
 
     const [isLoading, setIsLoading] = useState(false)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const { control, register, handleSubmit, reset, setValue } = form;
 
     const { fields, append, remove, replace } = useFieldArray({
@@ -52,8 +53,8 @@ const CategoryEditFormDialog = ({
         if (category) {
             setValue("name", category.name);
             replace(
-                category.measurements.map((m: any) => ({
-                    id: m.id, name: m.name,
+                category.measurements.map((measurment: any) => ({
+                    id: measurment.id, name: measurment.name,
                 }))
             );
         }
@@ -74,7 +75,7 @@ const CategoryEditFormDialog = ({
                 measurements: data.measurements.map((measurment) =>
                     measurment.id ? { id: measurment.id, name: measurment.name } : { name: measurment.name }
                 ),
-                file: data.file,
+                file: selectedFile || undefined,
             };
             const result = await updateCategory(category.id, payload);
 
@@ -113,7 +114,11 @@ const CategoryEditFormDialog = ({
                     {/* Image */}
                     <Field>
                         <FieldLabel>Change Image (Optional)</FieldLabel>
-                        <Input type="file" {...register("file")} />
+                        <Input
+                            id="file"
+                            type="file"
+                            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} // <-- set state
+                        />
                     </Field>
 
                     {/* Measurements */}

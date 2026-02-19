@@ -1,6 +1,5 @@
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -8,6 +7,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "../ui/alert-dialog";
+import SubmitButton from "./SubmitButton";
 
 interface DeleteConfirmDialogProps {
     open: boolean;
@@ -43,14 +43,14 @@ const DeleteConfirmationDialog = ({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
+                    <AlertDialogCancel disabled={isDeleting} className="cursor-pointer">Cancel</AlertDialogCancel>
+                    <SubmitButton
                         onClick={onConfirm}
-                        disabled={isDeleting}
-                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                    >
-                        {isDeleting ? "Deleting..." : "Delete"}
-                    </AlertDialogAction>
+                        isLoading={isDeleting}
+                        loadingText="Deleting..."
+                        className="w-1/5 h-8.5 text-white text-sm font-medium rounded-md hover:cursor-pointer"
+                        title="Delete"
+                    />
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

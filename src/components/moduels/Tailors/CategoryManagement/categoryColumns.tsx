@@ -2,7 +2,8 @@
 
 import { DateCell } from "@/components/shared/cell/DateCell";
 import { Column } from "@/components/shared/ManagementTable";
-import Image from "next/image";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Shirt } from "lucide-react";
 
 export interface IMeasurement {
   id: string;
@@ -22,19 +23,19 @@ export const categoryColumns: Column<IClothCategory>[] = [
     header: "Category Name",
     accessor: (category) => (
       <div className="flex items-center gap-3">
-        {category.image ? (
-          <Image
-            src={category.image}
-            alt={category.name}           
-            width={10}
-            height={10}
-            className="h-10 w-10 rounded-md"
-          />
-        ) : (
-          <div className="h-10 w-10 rounded-md bg-gray-200 flex items-center justify-center text-xs font-medium">
-            {category.name.charAt(0)}
-          </div>
-        )}
+        <Avatar className="h-10 w-10 rounded-xl shadow-md">
+          {category.image ? (
+            <AvatarImage
+              src={category.image}
+              alt={category.name}
+              className="object-cover"
+            />
+          ) : (
+            <AvatarFallback className="bg-white dark:bg-muted flex items-center justify-center">
+              <Shirt className="h-10 w-10 text-purple-600" />
+            </AvatarFallback>
+          )}
+        </Avatar>
         <span className="font-medium">{category.name}</span>
       </div>
     ),
@@ -66,17 +67,6 @@ export const categoryColumns: Column<IClothCategory>[] = [
       );
     },
   },
-
-  {
-    header: "Total",
-    accessor: (category) => (
-      <span className="text-sm font-semibold">
-        {category.measurements?.length ?? 0}
-      </span>
-    ),
-    // sortKey: "measurements",
-  },
-
   {
     header: "Created",
     accessor: (category) => (

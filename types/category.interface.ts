@@ -42,11 +42,11 @@ export interface IEditClothCategory {
     id: string;
     name: string;
     measurements: IEditMeasurement[];
-    file?: FileList;
+    file?: File;
 }
 
 export interface IEditCategoryPayload {
     name: string;
     measurements: { id?: string; name: string }[];
-    file?: FileList; // single file, optional
+    file?: File; // single file, optional
 }
