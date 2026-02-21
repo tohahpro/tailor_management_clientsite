@@ -20,6 +20,7 @@ interface ManagementTableProps<T> {
     onEdit?: (row: T) => void;
     onDelete?: (row: T) => void;
     getRowKey: (row: T) => string;
+    className: string;
     emptyMessage?: string;
     isRefreshing?: boolean;
 }
@@ -32,6 +33,7 @@ function ManagementTable<T>({
     onEdit,
     onDelete,
     getRowKey,
+    className,
     emptyMessage = "No records found",
     isRefreshing = false,
 }: ManagementTableProps<T>) {
@@ -91,7 +93,7 @@ function ManagementTable<T>({
                     </div>
                 )}
 
-                <Table>
+                <Table className={`${className}`}>
                     <TableHeader>
                         <TableRow>
                             {columns?.map((column, colIndex) => (

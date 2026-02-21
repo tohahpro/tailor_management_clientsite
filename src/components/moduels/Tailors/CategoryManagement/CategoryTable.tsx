@@ -71,6 +71,7 @@ const CategoryTable = ({ categories }: CategoryTableProps) => {
                 onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                className="bg-white/70 rounded-md"
                 getRowKey={(category) => category.id}
                 emptyMessage="No specialities found"
             />
