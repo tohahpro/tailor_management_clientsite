@@ -4,6 +4,7 @@
 import { ButtonHTMLAttributes, FC } from "react";
 
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    className?:string;
     title: string;           // Default button text
     isLoading?: boolean;     // Loading state
     loadingText?: string;    // Optional text when loading
@@ -11,6 +12,7 @@ interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const SubmitButton: FC<SubmitButtonProps> = ({
     title,
+    className,
     isLoading = false,
     loadingText,
     disabled,
@@ -21,7 +23,7 @@ const SubmitButton: FC<SubmitButtonProps> = ({
 
             <button
                 disabled={isLoading || disabled}
-                className="relative w-full h-11 rounded-lg overflow-hidden flex items-center justify-center font-semibold text-white transition-all duration-200 active:scale-[0.98] hover:text-white/90 disabled:opacity-70 disabled:cursor-not-allowed"
+                className={`relative overflow-hidden flex items-center justify-center font-semibold text-white transition-all duration-200 active:scale-[0.98] hover:text-white/90 disabled:opacity-70 cursor-pointer ${className ? className : "w-full h-11 rounded-lg"}`}
                 style={{
                     backgroundImage: "linear-gradient(90deg, #8f43ec, #8545d3, #4e1e8a)",
                     backgroundSize: "200% 200%",
@@ -39,8 +41,8 @@ const SubmitButton: FC<SubmitButtonProps> = ({
                     <rect
                         x="1"
                         y="1"
-                        width="calc(100% - 2)"
-                        height="calc(100% - 2)"
+                        // width="calc(100% - 2)"
+                        // height="calc(100% - 2)"
                         rx="0.5rem"
                         ry="0.5rem"
                         fill="none"
