@@ -33,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import { FormType, OrderProps } from "../../../../../types/order.interface";
 import { createOrder } from "@/services/tailors/order.service";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function OrderFormDialog({
     categories = [],
@@ -47,6 +48,7 @@ export default function OrderFormDialog({
     });
 
     const { control, handleSubmit, setValue, getValues, watch, reset } = form;
+    const [isLoading, setIsLoading] = useState(false);
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -60,6 +62,7 @@ export default function OrderFormDialog({
 
     const onSubmit = async (data: FormType) => {
         try {
+            setIsLoading(true);
             const payload = {
                 orderNumber: data.orderNumber,
                 customerName: data.customerName,
@@ -82,19 +85,20 @@ export default function OrderFormDialog({
                 })),
             };
 
-            console.log(payload)
+            const result = await createOrder(payload);
 
-            //   const result = await createOrder(payload);
-
-            //   if (result.success) {
-            //     toast.success(result.message);
-            //     onSuccess();
-            //     handleClose();
-            //   } else {
-            //     toast.error(result.message);
-            //   }
-        } catch (error) {
-            console.log(error);
+            if (result.success) {
+                toast.success(result.message);
+                setIsLoading(false);
+                onSuccess();
+                handleClose();
+            } else {
+                setIsLoading(false);
+                toast.error(result.message);
+            }
+        } catch (error: any) {
+            setIsLoading(false);
+            toast.error(error.message || "An error occurred while creating the order.");
         }
     };
 
@@ -191,66 +195,72 @@ export default function OrderFormDialog({
                         return (
                             <div
                                 key={item.id}
-                                className="border p-5 rounded-xl space-y-4 relative"
+                                className="border p-5 rounded-xl hover:shadow-sm space-y-4 relative"
                             >
                                 <X
-                                    className="absolute right-3.5 top-3.5 cursor-pointer w-4 h-4 bg-red-400 rounded-full p-0.5 text-white"
+                                    className="absolute -right-1.5 -top-1.5 cursor-pointer w-[16px] h-[16px] bg-red-400 rounded-full p-0.5 text-white"
                                     onClick={() => remove(index)}
                                 />
 
                                 {/* CATEGORY + QUANTITY */}
                                 <div className="flex gap-4">
-                                    <Controller
-                                        control={control}
-                                        name={`order.${index}.clothCategoryId`}
-                                        render={({ field }) => (
-                                            <Select
-                                                value={field.value}
-                                                onValueChange={(value) => {
-                                                    field.onChange(value);
+                                    <div className="flex-1">
+                                        <Label className="pb-1.5">Cloth Category</Label>
+                                        <Controller
+                                            control={control}
+                                            name={`order.${index}.clothCategoryId`}
+                                            render={({ field }) => (
+                                                <Select
+                                                    value={field.value}
+                                                    onValueChange={(value) => {
+                                                        field.onChange(value);
 
-                                                    const selected = categoryList.find(
-                                                        (c: any) => c.id === value
-                                                    );
-                                                    if (!selected) return;
+                                                        const selected = categoryList.find(
+                                                            (c: any) => c.id === value
+                                                        );
+                                                        if (!selected) return;
 
-                                                    setValue(
-                                                        `order.${index}.measurements`,
-                                                        selected.measurements.map((m: any) => ({
-                                                            measurementId: m.id,
-                                                            value: "",
-                                                        }))
-                                                    );
-                                                }}
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select Category" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {categoryList.map((cat: any) => (
-                                                        <SelectItem key={cat.id} value={cat.id}>
-                                                            {cat.name}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        )}
-                                    />
+                                                        setValue(
+                                                            `order.${index}.measurements`,
+                                                            selected.measurements.map((m: any) => ({
+                                                                measurementId: m.id,
+                                                                value: "",
+                                                            }))
+                                                        );
+                                                    }}
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Select Category" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {categoryList.map((cat: any) => (
+                                                            <SelectItem key={cat.id} value={cat.id}>
+                                                                {cat.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            )}
+                                        />
+                                    </div>
 
-                                    <Controller
-                                        control={control}
-                                        name={`order.${index}.quantity`}
-                                        render={({ field }) => (
-                                            <Input type="number" min={1} {...field} />
-                                        )}
-                                    />
+                                    <div>
+                                        <Label className="pb-1.5">Quantity</Label>
+                                        <Controller
+                                            control={control}
+                                            name={`order.${index}.quantity`}
+                                            render={({ field }) => (
+                                                <Input type="number" min={1} {...field} />
+                                            )}
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* MEASUREMENTS */}
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                     {measurements.map((m: any, mIndex: number) => (
                                         <div key={mIndex}>
-                                            <Label>
+                                            <Label className="pb-1.5">
                                                 {
                                                     categoryList
                                                         .find(
@@ -283,7 +293,7 @@ export default function OrderFormDialog({
                                     <Button
                                         type="button"
                                         size="sm"
-                                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                                        className="bg-[#8b43e3] hover:bg-[#7437be] cursor-pointer text-white"
                                         onClick={() => {
                                             const current = getValues(`order.${index}.notes`) || [];
                                             setValue(`order.${index}.notes`, [...current, { content: "" }]);
@@ -297,11 +307,9 @@ export default function OrderFormDialog({
                                         <div key={noteIndex} className="relative group">
 
                                             {/* Remove Button - Top Right Corner */}
-                                            <Button
+                                            <button
                                                 type="button"
-                                                size="icon"
-                                                variant="destructive"
-                                                className="absolute -top-1.5 -right-1.5 w-4 h-4 p-1 rounded-full"
+                                                className="absolute cursor-pointer -top-1.5 -right-1.5 w-4 h-4 bg-red-400 rounded-full flex items-center justify-center"
                                                 onClick={() => {
                                                     const updated = notes.filter(
                                                         (_: any, i: number) => i !== noteIndex
@@ -309,8 +317,8 @@ export default function OrderFormDialog({
                                                     setValue(`order.${index}.notes`, updated);
                                                 }}
                                             >
-                                                <X className="w-3 h-3" />
-                                            </Button>
+                                                <X className="w-4 h-4 text-white p-0.5" />
+                                            </button>
 
                                             {/* Input Field */}
                                             <Controller
@@ -352,7 +360,12 @@ export default function OrderFormDialog({
                         <Button type="button" variant="outline" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <SubmitButton title="Create Order" />
+                        <SubmitButton
+                            className="w-2/6 rounded-lg"
+                            loadingText="Creating..."
+                            isLoading={isLoading}
+                            title="Create Order"
+                        />
                     </div>
                 </form>
             </DialogContent>
