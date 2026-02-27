@@ -1,6 +1,6 @@
 "use client";
 
-import { formatDateTime } from "@/lib/formatters";
+import { formatDate, formatDateTime } from "@/lib/formatters";
 
 
 interface DateCellProps {
@@ -9,4 +9,8 @@ interface DateCellProps {
 
 export function DateCell({ date }: DateCellProps) {
   return <span className="text-sm">{formatDateTime(date!)}</span>;
+}
+
+export function DateOnlyCell({ date }: DateCellProps) {
+  return <span className="text-sm">{formatDate(date!)}</span>;
 }

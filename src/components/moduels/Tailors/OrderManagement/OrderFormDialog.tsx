@@ -34,6 +34,7 @@ import { FormType, OrderProps } from "../../../../../types/order.interface";
 import { createOrder } from "@/services/tailors/order.service";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderFormDialog({
     categories = [],
@@ -106,7 +107,7 @@ export default function OrderFormDialog({
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="md:min-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className="text-center pb-3">
                         🧵 Create Order
@@ -198,7 +199,7 @@ export default function OrderFormDialog({
                                 className="border p-5 rounded-xl hover:shadow-sm space-y-4 relative"
                             >
                                 <X
-                                    className="absolute -right-1.5 -top-1.5 cursor-pointer w-[16px] h-[16px] bg-red-400 rounded-full p-0.5 text-white"
+                                    className="absolute -right-1.5 -top-1.5 cursor-pointer w-4 h-4 bg-red-400 rounded-full p-0.5 text-white"
                                     onClick={() => remove(index)}
                                 />
 
@@ -325,7 +326,7 @@ export default function OrderFormDialog({
                                                 control={control}
                                                 name={`order.${index}.notes.${noteIndex}.content`}
                                                 render={({ field }) => (
-                                                    <Input
+                                                    <Textarea
                                                         {...field}
                                                         placeholder="Write your note..."
                                                         className="pr-8 shadow-sm focus:ring-2 focus:ring-blue-500"

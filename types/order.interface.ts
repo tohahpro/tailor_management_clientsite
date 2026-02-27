@@ -8,7 +8,7 @@ export interface OrderProps {
 }
 
 export interface INoteInput {
-  content: string;
+    content: string;
 }
 
 export interface FormType {
@@ -36,6 +36,10 @@ export interface IOrderItem {
     clothCategoryId: string;
     quantity?: number;
     price?: number;
+    clothCategory: {
+        id: string;
+        name: string;
+    };
     measurements?: IOrderMeasurement[];
 }
 
@@ -57,4 +61,18 @@ export interface ICreateOrderPayload {
 
 export interface IUpdateOrderPayload extends Partial<ICreateOrderPayload> {
     status?: "PENDING" | "IN_PROGRESS" | "DELIVERED" | "CANCELLED";
+}
+
+export interface IOrder {
+    id: string;
+    orderNumber: number;
+    customerName: string;
+    phoneNumber: string;
+    deliveryDate: string;
+    totalAmount: number;
+    paidAmount: number;
+    dueAmount: number;
+    status: "PENDING" | "COMPLETED" | "CANCELLED";
+    createdAt: string;
+    items: IOrderItem[];
 }
