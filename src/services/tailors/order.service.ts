@@ -64,6 +64,25 @@ export async function updateOrder(orderId: string, payload: IUpdateOrderPayload)
     return result;
 }
 
+// ✅ Update Order status
+export async function updateOrderStatus(orderId: string, status: any) {
+
+    const response = await serverFetch.patch(`/order/status/${orderId}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ status })
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+        throw new Error(result.message || "Order update failed");
+    }
+
+    return result;
+}
+
 // ✅ Delete Order
 export async function deleteOrder(id: string) {
     try {

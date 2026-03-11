@@ -2,8 +2,8 @@
 
 import { Column } from "@/components/shared/ManagementTable";
 import { DateOnlyCell } from "@/components/shared/cell/DateCell";
-import { Badge } from "@/components/ui/badge";
 import { IOrder } from "../../../../../types/order.interface";
+import OrderStatusSelect from "./OrderStatus";
 
 export const orderColumns: Column<IOrder>[] = [
     {
@@ -18,7 +18,7 @@ export const orderColumns: Column<IOrder>[] = [
         header: "Customer",
         accessor: (order) => (
             <div className="flex flex-col">
-                <span className="font-medium">{order.customerName}</span>                
+                <span className="font-medium">{order.customerName}</span>
             </div>
         ),
         sortKey: "customerName",
@@ -26,7 +26,7 @@ export const orderColumns: Column<IOrder>[] = [
     {
         header: "Phone",
         accessor: (order) => (
-            <div className="flex flex-col">                
+            <div className="flex flex-col">
                 <span className="text-xs text-muted-foreground">
                     {order.phoneNumber}
                 </span>
@@ -70,20 +70,12 @@ export const orderColumns: Column<IOrder>[] = [
 
     {
         header: "Status",
-        accessor: (order) => {
-            const statusColor =
-                order.status === "COMPLETED"
-                    ? "bg-green-100 text-green-700"
-                    : order.status === "CANCELLED"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700";
-
-            return (
-                <Badge className={statusColor}>
-                    {order.status}
-                </Badge>
-            );
-        },
+        accessor: (order) => (
+            <OrderStatusSelect
+                orderId={order.id}
+                currentStatus={order.status}
+            />
+        ),
         sortKey: "status",
     },
 

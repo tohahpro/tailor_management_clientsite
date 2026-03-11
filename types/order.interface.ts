@@ -60,7 +60,7 @@ export interface ICreateOrderPayload {
 }
 
 export interface IUpdateOrderPayload extends Partial<ICreateOrderPayload> {
-    status?: "PENDING" | "IN_PROGRESS" | "DELIVERED" | "CANCELLED";
+    status?: "PENDING" |"CUTTING" |"SEWING"| "COMPLETED" | "DELIVERED";
 }
 
 export interface IOrder {
@@ -72,7 +72,7 @@ export interface IOrder {
     totalAmount: number;
     paidAmount: number;
     dueAmount: number;
-    status: "PENDING" | "COMPLETED" | "CANCELLED";
+    status: "PENDING" |"CUTTING" |"SEWING"| "COMPLETED" | "DELIVERED";
     createdAt: string;
     items: IOrderItem[];
 }

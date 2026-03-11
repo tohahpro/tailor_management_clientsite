@@ -14,12 +14,8 @@ interface OrderTableProps {
 
 const OrderTable = ({ orders }: OrderTableProps) => {
     const router = useRouter();
-    const [, startTransition] = useTransition();
-    const [viewingOrder, setViewingOrder] = useState<any | null>(null);
-    const [editingOrder, setEditingOrder] = useState<any | null>(null);
+    const [, startTransition] = useTransition();    
     const [deletingOrder, setDeletingOrder] = useState<any | null>(null);
-
-
     const [isDeletingDialog, setIsDeletingDialog] = useState(false);
 
     const handleRefresh = () => {
@@ -29,11 +25,11 @@ const OrderTable = ({ orders }: OrderTableProps) => {
     };
 
     const handleView = (order: any) => {
-        setViewingOrder(order);
+        router.push(`/dashboard/my-orders/${order.id}`);
     };
 
     const handleEdit = (order: any) => {
-        setEditingOrder(order);
+        router.push(`/dashboard/my-orders/${order.id}/edit`);
     };
 
     const handleSuccess = () => {

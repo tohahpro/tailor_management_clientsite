@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const measurementSchema = z.object({
-  measurementId: z.string().min(1),
+  measurementId: z.string(),
   value: z.string().min(1, "Measurement required"),
 });
 
@@ -10,44 +10,18 @@ const noteSchema = z.object({
 });
 
 const orderItemSchema = z.object({
-  clothCategoryId: z.string().min(1, "Category is required"),
-  quantity: z.coerce
-    .number()
-    .min(1, "Quantity must be at least 1"),
+  clothCategoryId: z.string().min(1, "Category required"),
+  quantity: z.string().min(1, "Quantity required"),
   measurements: z.array(measurementSchema),
   notes: z.array(noteSchema).optional(),
 });
 
-export const createOrderSchema = z.object({
-  orderNumber: z.coerce
-    .number()
-    .min(1, "Order number is required"),
-
-  customerName: z
-    .string()
-    .min(1, "Customer name is required"),
-
-  phoneNumber: z
-    .string()
-    .min(6, "Phone number is required"),
-
-  deliveryDate: z
-    .date()
-    .refine((date) => date instanceof Date, {
-      message: "Delivery date is required",
-    }),
-
-  totalAmount: z.coerce
-    .number()
-    .min(1, "Total amount is required"),
-
-  paidAmount: z.coerce
-    .number()
-    .min(0, "Paid amount cannot be negative"),
-
-  order: z
-    .array(orderItemSchema)
-    .min(1, "At least one dress item is required"),
+export const orderFormSchema = z.object({
+  orderNumber: z.string().min(1, "Order number required"),
+  customerName: z.string().min(1),
+  phoneNumber: z.string().min(6),
+  deliveryDate: z.date(),
+  totalAmount: z.string().min(1),
+  paidAmount: z.string().optional(),
+  order: z.array(orderItemSchema).min(1),
 });
-
-export type CreateOrderFormType = z.infer<typeof createOrderSchema>;
