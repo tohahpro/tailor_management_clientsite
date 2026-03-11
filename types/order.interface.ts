@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export interface OrderProps {
+    orders: any;
     categories: any;
     open: boolean;
     onClose: () => void;
@@ -57,10 +58,6 @@ export interface ICreateOrderPayload {
     paidAmount?: number;
     items: IOrderItem[];
     // notes?: IOrderNote[];
-}
-
-export interface IUpdateOrderPayload extends Partial<ICreateOrderPayload> {
-    status?: "PENDING" |"CUTTING" |"SEWING"| "COMPLETED" | "DELIVERED";
 }
 
 export interface IOrder {

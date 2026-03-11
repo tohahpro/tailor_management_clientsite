@@ -1,17 +1,25 @@
-import OrderEdit from "@/components/moduels/Tailors/OrderManagement/OrderEdit";
+
+import OrderEditForm from "@/components/moduels/Tailors/OrderManagement/OrderEditForm";
+import { getAllCategories } from "@/services/tailors/category.service";
 import { getOrderById } from "@/services/tailors/order.service";
 
 interface Params {
   params: { id: string };
 }
 
-export default async function EditOrder({ params }: Params) {
-  const order = await getOrderById(params.id);
+export default async function EditOrderPage({ params }: Params) {
+  
+  const { id } = await params; 
+  const order = await getOrderById(id);
+  const categories = await getAllCategories();
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Edit Order</h1>
-      <OrderEdit/>
+      <h2 className="text-2xl font-semibold mb-6">✏️ Edit Order</h2>
+      <OrderEditForm
+        order={order.data}
+        categories={categories}
+      />
     </div>
   );
 }

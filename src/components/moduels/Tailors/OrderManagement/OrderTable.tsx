@@ -32,12 +32,6 @@ const OrderTable = ({ orders }: OrderTableProps) => {
         router.push(`/dashboard/my-orders/${order.id}/edit`);
     };
 
-    const handleSuccess = () => {
-        startTransition(() => {
-            router.refresh();
-        });
-    };
-
     const handleDelete = (order: any) => {
         setDeletingOrder(order);
     };

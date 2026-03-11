@@ -7,19 +7,24 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import OrderFormDialog from "./OrderFormDialog";
 import { getAllCategories } from "@/services/tailors/category.service";
+import { getAllOrders } from "@/services/tailors/order.service";
 
 const OrderManagementHeader = () => {
     const router = useRouter();
     const [, startTransition] = useTransition();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [categories, setCategories] = useState<any[]>([]); // cloth categories with measurements
+    const [categories, setCategories] = useState<any[]>([]);
+    const [orders, setOrders] = useState<any[]>([]);
 
     useEffect(() => {
-        async function fetchCategories() {
-            const result = await getAllCategories(); // must return [{ id, name, measurements: [{ id, name }] }]
-            setCategories(result);
+        async function fetchData() {
+            const categoriesResult = await getAllCategories();
+            setCategories(categoriesResult);
+
+            const ordersResult = await getAllOrders();
+            setOrders(ordersResult); 
         }
-        fetchCategories();
+        fetchData();
     }, []);
 
     const handleSuccess = () => {
@@ -30,6 +35,7 @@ const OrderManagementHeader = () => {
     return (
         <>
             <OrderFormDialog
+                orders={orders || []}
                 categories={categories || []}
                 open={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}

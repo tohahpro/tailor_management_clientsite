@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-
 import { serverFetch } from "@/lib/server-fetch";
-import { IUpdateOrderPayload } from "../../../types/order.interface";
 
-// ✅ Create Order
+// Create Order
 export async function createOrder(payload: any) {
     const response = await serverFetch.post("/order", {
         body: JSON.stringify(payload),
@@ -23,7 +21,7 @@ export async function createOrder(payload: any) {
     return result;
 }
 
-// ✅ Get All Orders
+// Get All Orders
 export async function getAllOrders(query?: string) {
     try {
         const response = await serverFetch.get(`/order${query ? `?${query}` : ""}`);
@@ -36,7 +34,7 @@ export async function getAllOrders(query?: string) {
     }
 }
 
-// ✅ Get Order By ID
+// Get Order By ID
 export async function getOrderById(id: string) {
     try {
         const response = await serverFetch.get(`/order/${id}`);
@@ -49,9 +47,12 @@ export async function getOrderById(id: string) {
     }
 }
 
-// ✅ Update Order
-export async function updateOrder(orderId: string, payload: IUpdateOrderPayload) {
+// Update Order
+export async function updateOrder(orderId: string, payload: any) {
     const response = await serverFetch.patch(`/order/${orderId}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload)
     });
 
@@ -64,7 +65,7 @@ export async function updateOrder(orderId: string, payload: IUpdateOrderPayload)
     return result;
 }
 
-// ✅ Update Order status
+// Update Order status
 export async function updateOrderStatus(orderId: string, status: any) {
 
     const response = await serverFetch.patch(`/order/status/${orderId}`, {
@@ -83,7 +84,7 @@ export async function updateOrderStatus(orderId: string, status: any) {
     return result;
 }
 
-// ✅ Delete Order
+// Delete Order
 export async function deleteOrder(id: string) {
     try {
         const response = await serverFetch.delete(`/order/${id}`);

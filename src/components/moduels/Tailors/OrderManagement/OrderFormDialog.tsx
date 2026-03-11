@@ -33,10 +33,11 @@ import { Input } from "@/components/ui/input";
 import { FormType, OrderProps } from "../../../../../types/order.interface";
 import { createOrder } from "@/services/tailors/order.service";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function OrderFormDialog({
+    orders = [],
     categories = [],
     open,
     onClose,
@@ -44,6 +45,7 @@ export default function OrderFormDialog({
 }: OrderProps) {
     const form = useForm<FormType>({
         defaultValues: {
+            orderNumber: 0,
             order: [],
         },
     });
@@ -56,6 +58,16 @@ export default function OrderFormDialog({
         name: "order",
     });
 
+    let nextOrderNumber;
+    const totalOrders = orders?.data?.length;
+ 
+    useEffect(() => {
+        if (open) {
+            const nextOrderNumber = totalOrders + 1;
+            reset({ orderNumber: nextOrderNumber, order: [] });
+        }
+    }, [open, reset, totalOrders]);
+
     const handleClose = () => {
         reset();
         onClose();
@@ -65,7 +77,7 @@ export default function OrderFormDialog({
         try {
             setIsLoading(true);
             const payload = {
-                orderNumber: data.orderNumber,
+                orderNumber: data.orderNumber || nextOrderNumber,
                 customerName: data.customerName,
                 phoneNumber: data.phoneNumber,
                 deliveryDate: data.deliveryDate
