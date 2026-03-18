@@ -28,7 +28,7 @@ const CategoryManagementHeader = () => {
         title="Category Management"
         description="Manage Category information and details"
         action={{
-          label: "Add Specialty",
+          label: "Add Category",
           icon: Plus,
           onClick: () => setIsDialogOpen(true),
         }}

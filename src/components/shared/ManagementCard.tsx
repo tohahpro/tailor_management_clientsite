@@ -2,7 +2,6 @@
 "use client";
 
 import OrderStatusSelect from "../moduels/Tailors/OrderManagement/OrderStatus";
-import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import {
     DropdownMenu,
@@ -10,7 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Eye, Edit, Trash, MoreHorizontal } from "lucide-react";
+import { Eye, Edit, Trash } from "lucide-react";
 import { DateOnlyCell } from "./cell/DateCell";
 import SubmitButton from "./SubmitButton";
 

@@ -44,9 +44,9 @@ const OrderManagementHeader = () => {
 
             <ManagementPageHeader
                 title="Order Management"
-                description="Manage Category information and details"
+                description="Manage Order information and details"
                 action={{
-                    label: "Create Order",
+                    label: "Add Order",
                     icon: Plus,
                     onClick: () => setIsDialogOpen(true),
                 }}

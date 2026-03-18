@@ -73,7 +73,7 @@ const CategoryTable = ({ categories }: CategoryTableProps) => {
                 onDelete={handleDelete}
                 className="bg-white/70 rounded-md"
                 getRowKey={(category) => category.id}
-                emptyMessage="No specialities found"
+                emptyMessage="No categories found"
             />
             {/* View Category Detail Dialog */}
             <CategoryViewDetailDialog
