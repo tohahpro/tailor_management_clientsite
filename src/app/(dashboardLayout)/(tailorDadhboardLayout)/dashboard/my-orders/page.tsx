@@ -1,3 +1,4 @@
+import OrderCard from "@/components/moduels/Tailors/OrderManagement/orderCard";
 import OrderManagementHeader from "@/components/moduels/Tailors/OrderManagement/OrderManagementHeader";
 import OrderTable from "@/components/moduels/Tailors/OrderManagement/OrderTable";
 import PageBackground from "@/components/shared/PageBackgroundColor";
@@ -27,7 +28,12 @@ const OrderManagementPage = async ({
           <RefreshButton />
         </div>
         <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
-          <OrderTable orders={orderResult.data} />
+          <div className="hidden lg:block">
+            <OrderTable orders={orderResult.data} />
+          </div>
+          <div className="lg:hidden">
+            <OrderCard orders={orderResult.data} />
+          </div>
           <TablePagination
             currentPage={orderResult.meta?.page || 1}
             totalPages={totalPages || 1}

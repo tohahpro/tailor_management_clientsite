@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
-import ManagementTable from "@/components/shared/ManagementTable";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { orderColumns } from "./orderColumns";
 import { deleteOrder } from "@/services/tailors/order.service";
+import ManagementCard from "@/components/shared/ManagementCard";
 
-interface OrderTableProps {
+interface OrderCardProps {
     orders: any[];
 }
 
-const OrderTable = ({ orders }: OrderTableProps) => {
+const OrderCard = ({ orders }: OrderCardProps) => {
     const router = useRouter();
     const [, startTransition] = useTransition();
     const [deletingOrder, setDeletingOrder] = useState<any | null>(null);
@@ -53,14 +52,12 @@ const OrderTable = ({ orders }: OrderTableProps) => {
 
     return (
         <>
-            <div className="hidden lg:block">
-                <ManagementTable
-                    data={orders}
-                    columns={orderColumns}
+            <div>
+                <ManagementCard
+                    data={orders}                    
                     onView={handleView}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
-                    className="bg-white/70 rounded-md"
                     getRowKey={(Order) => Order.id}
                     emptyMessage="No Orders found"
                 />
@@ -79,4 +76,4 @@ const OrderTable = ({ orders }: OrderTableProps) => {
     );
 };
 
-export default OrderTable;
+export default OrderCard;
