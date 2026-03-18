@@ -39,7 +39,7 @@ export const orderColumns: Column<IOrder>[] = [
         header: "Items",
         accessor: (order) => (
             <div className="flex flex-wrap gap-1">
-                {order.items.map((item) => (
+                {order?.items?.map((item) => (
                     <span
                         key={item.id}
                         className="flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800"

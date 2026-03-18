@@ -35,3 +35,12 @@ export function queryStringFormatter(searchParamsObj: { [key: string]: string | 
     queryString = queryArray.filter((q) => q !== "").join("&"); // searchTerm=John&speciality=Cardiology&speciality=Neurology
     return queryString;
 }
+
+export function getInitials(name: string): string {
+    return name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
+}

@@ -113,7 +113,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
             onValueChange={changeLimit}
             disabled={isPending}
           >
-            <SelectTrigger className="w-[70px] h-8">
+            <SelectTrigger className="w-15 h-8">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
