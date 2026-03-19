@@ -18,7 +18,7 @@ const TailorManagementPage = async ({
 
   const TailorResult = await getAllTailors(queryString)
   const totalPages = Math.ceil((TailorResult.meta?.total || 1) / (TailorResult.meta?.limit || 1));
-
+  console.log(TailorResult)
   return (
     <PageBackground className="bg-gradient-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
       <div className="space-y-6 p-5">

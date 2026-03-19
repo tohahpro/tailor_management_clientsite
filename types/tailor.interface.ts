@@ -1,11 +1,20 @@
-
 export interface ITailor {
     id: string;
     name?: string;
     storeName?: string;
     email: string;
+    role: string;
+    status: string;
+    address: string;
+    authtype: string;
     profilePhoto?: string;
-    address?: string;
-    contactNumber?: string;
-    isDeleted?: boolean;
+    isPasswordChange: boolean;
+    user: {
+        role?: string;
+        status?: string;
+        authtype?: string;
+    };
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
 }

@@ -85,10 +85,6 @@ const TailorViewDetailDialog = ({ open, onClose, tailor }: Props) => {
                 {tailor.user?.role && (
                   <Badge variant="secondary">{tailor.user.role}</Badge>
                 )}
-
-                {tailor.user?.status && (
-                  <Badge variant="outline">{tailor.user.status}</Badge>
-                )}
               </div>
             </div>
           </div>

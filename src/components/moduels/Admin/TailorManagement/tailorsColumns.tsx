@@ -2,73 +2,51 @@
 
 import { Column } from "@/components/shared/ManagementTable";
 import { DateOnlyCell } from "@/components/shared/cell/DateCell";
+import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
+import { ITailor } from "../../../../../types/tailor.interface";
+import { UserInfoCell } from "@/components/shared/cell/UserInfoCell";
 
-export interface ITailor {
-    id: string;
-    name?: string;
-    storeName?: string;
-    email: string;
-    role: string;
-    status: string;
-    authtype: string;
-    profilePhoto?: string;
-    isPasswordChange: boolean;
-    user: {
-        role?: string;
-        status?: string;
-        authtype?: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-}
 
 export const tailorColumns: Column<ITailor>[] = [
     {
-        header: "Name",
+        header: "Tailor",
         accessor: (tailor) => (
-            <span className="font-medium">{tailor.name || "N/A"}</span>
-        ),
-        sortKey: "name",
-    },
+            <UserInfoCell
+                name={tailor.name || 'N/A'}
+                email={tailor.email}
+                photo={tailor.profilePhoto}
+            />
+        )        
+    },   
     {
-        header: "Email",
+        header: "Address",
         accessor: (tailor) => (
-            <span className="font-medium">{tailor.email}</span>
-        ),
-        sortKey: "email",
-    },
-
-    {
-        header: "Role",
-        accessor: (tailor) => (
-            <span className="text-xs py-1 rounded-full bg-blue-100 text-blue-800">
-                {tailor.user.role}
+            <span className="text-xs font-light text-wrap">
+                {tailor.address || 'N/A'}
             </span>
         ),
-        sortKey: "role",
+    },
+    {
+        header: "Store Name",
+        accessor: (tailor) => (
+            <span className="font-medium text-wrap">
+                {tailor.storeName || 'N/A'}
+            </span>
+        ),
     },
 
     {
         header: "Status",
         accessor: (tailor) => (
-            <span
-                className={`text-xs px-2 py-1 rounded-full font-medium ${
-                    tailor.user.status === "ACTIVE"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                }`}
-            >
-                {tailor.user.status}
-            </span>
+            <StatusBadgeCell isDeleted={tailor.isDeleted} />
         ),
-        sortKey: "status",
     },
 
     {
         header: "Auth Type",
         accessor: (tailor) => (
             <span className="text-xs text-muted-foreground">
-                {tailor.user.authtype}
+                {tailor.user.authtype !== 'LOCAL' ? 'Social Login' : 'Email/Password'}
             </span>
         ),
     },
