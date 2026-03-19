@@ -37,7 +37,8 @@ const TailrosTable = ({ tailors }: TailrosTableProps) => {
 
     return (
         <>
-            <ManagementTable
+            <div className="bg-white/80 rounded-lg">
+                <ManagementTable
                 data={tailors}
                 columns={tailorColumns}
                 onView={handleView}
@@ -46,6 +47,7 @@ const TailrosTable = ({ tailors }: TailrosTableProps) => {
                 getRowKey={(doctor) => doctor.id!}
                 emptyMessage="No tailors found"
             />
+            </div>
             {/* Edit Doctor Form Dialog */}
             <TailorFormDialog
                 open={!!editingTailor}

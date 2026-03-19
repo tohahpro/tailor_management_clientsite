@@ -8,4 +8,6 @@ export interface IAdmin {
     contactNumber: string;
     isPasswordChange: boolean;
     isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
