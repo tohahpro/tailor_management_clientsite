@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -19,59 +19,64 @@ interface Props {
   currentStatus: OrderStatus;
 }
 
-export default function OrderStatusSelect({ orderId, currentStatus }: Props) {
+export default function OrderStatusBadgeDropdown({ orderId, currentStatus }: Props) {
   const [status, setStatus] = useState<OrderStatus>(currentStatus);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    setStatus(currentStatus);
+  }, [currentStatus]);
+
   const handleChange = async (newStatus: OrderStatus) => {
-    if (newStatus === status) return; 
+    if (newStatus === status) return;
 
     const previousStatus = status;
-    setStatus(newStatus); 
+    setStatus(newStatus);
     setIsLoading(true);
 
     try {
-      await updateOrderStatus(orderId, newStatus);
+      const result = await updateOrderStatus(orderId, newStatus);
+      if (!result.success) throw new Error(result.message);
       toast.success(`Status updated to ${newStatus}`);
     } catch (error: any) {
-      setStatus(previousStatus); 
-      console.error(error);
-      toast.error(error.message || "Failed to update status");
+      setStatus(previousStatus);
+      toast.error(error?.message || "Failed to update status");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getStatusColor = (s: OrderStatus) => {
+  const getBadgeColor = (s: OrderStatus) => {
     switch (s) {
       case "PENDING":
-        return "bg-yellow-500";
+        return "bg-[#FEE8DB] text-[#70370c]";
       case "CUTTING":
-        return "bg-indigo-500";
+        return "bg-[#E0E7FF] text-[#4F46E5]";
       case "SEWING":
-        return "bg-purple-500";
+        return "bg-[#E8D5FF] text-[#7C3AED]";
       case "COMPLETED":
-        return "bg-green-500";
+        return "bg-[#46c969] text-[#09491a]";
       case "DELIVERED":
-        return "bg-blue-500";
+        return "bg-[#C4D9FF] text-[#0D1A63]";
     }
   };
 
   return (
     <Select value={status} onValueChange={handleChange} disabled={isLoading}>
       <SelectTrigger
-        className={`ml-2 px-3 py-1 rounded-lg text-white text-sm ${getStatusColor(
-          status
-        )} ${isLoading ? "opacity-50 cursor-wait" : ""}`}
+        className={`flex items-center justify-center rounded-md text-sm font-medium transition ${
+          isLoading ? "opacity-50 cursor-wait" : getBadgeColor(status)
+        }`}
       >
         <SelectValue placeholder="Select status" />
       </SelectTrigger>
+
       <SelectContent>
-        <SelectItem value="PENDING">PENDING</SelectItem>
-        <SelectItem value="CUTTING">CUTTING</SelectItem>
-        <SelectItem value="SEWING">SEWING</SelectItem>
-        <SelectItem value="COMPLETED">COMPLETED</SelectItem>
-        <SelectItem value="DELIVERED">DELIVERED</SelectItem>
+        <SelectItem value="PENDING">Pending</SelectItem>
+        <SelectItem value="CUTTING">Cutting</SelectItem>
+        <SelectItem value="SEWING">Sewing</SelectItem>
+        <SelectItem value="COMPLETED">Completed</SelectItem>
+        <SelectItem value="DELIVERED">Delivered</SelectItem>
       </SelectContent>
     </Select>
   );

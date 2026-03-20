@@ -1,8 +1,8 @@
 import OrderCard from "@/components/moduels/Tailors/OrderManagement/orderCard";
+import OrderFilters from "@/components/moduels/Tailors/OrderManagement/orderFilters";
 import OrderManagementHeader from "@/components/moduels/Tailors/OrderManagement/OrderManagementHeader";
 import OrderTable from "@/components/moduels/Tailors/OrderManagement/OrderTable";
 import PageBackground from "@/components/shared/PageBackgroundColor";
-import RefreshButton from "@/components/shared/RefreshButton";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
@@ -21,12 +21,11 @@ const OrderManagementPage = async ({
   const totalPages = Math.ceil((orderResult.meta?.total || 1) / (orderResult.meta?.limit || 1));
 
   return (
-    <PageBackground className="bg-gradient-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
+    <PageBackground className="bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
       <div className="space-y-6 p-5">
         <OrderManagementHeader />
-        <div className="flex">
-          <RefreshButton />
-        </div>
+        
+        <OrderFilters />
         <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
           <div className="hidden lg:block">
             <OrderTable orders={orderResult.data} />
