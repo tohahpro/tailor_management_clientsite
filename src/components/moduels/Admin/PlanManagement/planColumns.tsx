@@ -5,6 +5,7 @@ import { DateOnlyCell } from "@/components/shared/cell/DateCell";
 import { capitalizeText } from "@/lib/formatters";
 import { IPlan } from "../../../../../types/plan.interface";
 import PlanStatusBadge from "./PlanStatusBadge";
+import { cn } from "@/lib/utils";
 
 
 export const planColumns: Column<IPlan>[] = [
@@ -32,7 +33,7 @@ export const planColumns: Column<IPlan>[] = [
     {
         header: "Order Limit",
         accessor: (plan) => (
-            <span>{plan.maximumOder}</span>
+            <span className={cn(`${plan.maximumOder > 5000 && 'font-medium'}`)}>{plan.maximumOder > 5000 ? 'Unlimited' : plan.maximumOder}</span>
         ),
     },
 
