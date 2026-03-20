@@ -99,12 +99,12 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
       </div>
 
       {/* Page info + limit selector */}
-      <div className="flex flex-wrap items-center justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-1">
         <span className="text-xs sm:text-sm text-muted-foreground">
           Page {currentPage} of {totalPages}
         </span>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
             Items per page:
           </span>
@@ -113,7 +113,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
             onValueChange={changeLimit}
             disabled={isPending}
           >
-            <SelectTrigger className="w-15 h-8">
+            <SelectTrigger className="w-full bg-white/40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

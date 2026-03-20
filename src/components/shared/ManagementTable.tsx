@@ -20,7 +20,7 @@ interface ManagementTableProps<T> {
     onEdit?: (row: T) => void;
     onDelete?: (row: T) => void;
     getRowKey: (row: T) => string;
-    className: string;
+    className?: string;
     emptyMessage?: string;
     isRefreshing?: boolean;
 }
