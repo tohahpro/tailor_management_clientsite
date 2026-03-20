@@ -17,7 +17,15 @@ export const tailorColumns: Column<ITailor>[] = [
                 photo={tailor.profilePhoto}
             />
         )        
-    },   
+    }, 
+     {
+        header: "Contact Number",
+        accessor: (tailor) => (
+            <span className="text-xs font-medium">
+                {tailor.contactNumber || 'N/A'}
+            </span>
+        ),
+    },  
     {
         header: "Address",
         accessor: (tailor) => (
@@ -51,18 +59,10 @@ export const tailorColumns: Column<ITailor>[] = [
         ),
     },
     {
-        header: "Created",
+        header: "Created At",
         accessor: (tailor) => (
             <DateOnlyCell date={tailor.createdAt} />
         ),
         sortKey: "createdAt",
-    },
-
-    {
-        header: "Updated",
-        accessor: (tailor) => (
-            <DateOnlyCell date={tailor.updatedAt} />
-        ),
-        sortKey: "updatedAt",
-    },
+    }
 ];

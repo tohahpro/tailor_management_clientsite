@@ -2,7 +2,6 @@ import SubscriptionFilters from "@/components/moduels/Admin/SubscriptionManageme
 import SubscriptionManagementHeader from "@/components/moduels/Admin/SubscriptionManagement/SubscriptionManagementHeader";
 import SubscriptionTable from "@/components/moduels/Admin/SubscriptionManagement/SubscriptionTable";
 import PageBackground from "@/components/shared/PageBackgroundColor";
-import RefreshButton from "@/components/shared/RefreshButton";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
@@ -22,7 +21,7 @@ const SubscriptionManagementPage = async ({
   console.log(SubscriptionResult)
 
   return (
-    <PageBackground className="bg-gradient-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
+    <PageBackground className="bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
       <div className="space-y-6 p-5">
         <SubscriptionManagementHeader />
         <SubscriptionFilters />

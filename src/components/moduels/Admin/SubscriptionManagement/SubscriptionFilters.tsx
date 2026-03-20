@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import RefreshButton from "@/components/shared/RefreshButton";
@@ -68,7 +69,7 @@ const SubscriptionFilters = () => {
         startTransition(() => {
             router.push(`?${params.toString()}`);
         });
-    }, [debouncedStatus, debouncedStartDate, debouncedEndDate, router, searchParams]);
+    }, [debouncedStatus, debouncedStartDate, debouncedEndDate]);
 
     const clearFilters = () => {
         setStatusInput("");

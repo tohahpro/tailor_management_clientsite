@@ -2,6 +2,7 @@ export interface ITailor {
     id: string;
     name?: string;
     storeName?: string;
+    contactNumber?: string;
     email: string;
     role: string;
     status: string;

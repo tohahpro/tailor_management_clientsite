@@ -1,3 +1,4 @@
+import AdminFilters from "@/components/moduels/Admin/AdminManagement/AdminFilters";
 import AdminsManagementHeader from "@/components/moduels/Admin/AdminManagement/AdminManagementHeader";
 import AdminsTable from "@/components/moduels/Admin/AdminManagement/AdminsTable";
 import PageBackground from "@/components/shared/PageBackgroundColor";
@@ -22,10 +23,10 @@ const AdminManagementPage = async ({
     );
 
     return (
-        <PageBackground className="bg-gradient-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
+        <PageBackground className="bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
             <div className="space-y-6 p-5">
                 <AdminsManagementHeader />
-
+                <AdminFilters />
                 <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
                     <AdminsTable admins={adminsResult?.data || []} />
                     <TablePagination

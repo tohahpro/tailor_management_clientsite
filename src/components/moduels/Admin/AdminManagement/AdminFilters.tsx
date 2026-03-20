@@ -4,7 +4,6 @@
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -18,52 +17,45 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { Label } from "@/components/ui/label";
 
-const TailorFilters = () => {
+const AdminFilters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  // Inputs
-  const [statusInput, setStatusInput] = useState(
-    () => searchParams.get("status") || ""
-  );
-  const [startDateInput, setStartDateInput] = useState(
-    () => searchParams.get("startDate") || ""
-  );
-  const [endDateInput, setEndDateInput] = useState(
-    () => searchParams.get("endDate") || ""
-  );
+  const [roleInput, setRoleInput] = useState(() => searchParams.get("role") || "");
+  const [statusInput, setStatusInput] = useState(() => searchParams.get("status") || "");
+  
 
-  // Debounce
+  const debouncedRole = useDebounce(roleInput, 300);
   const debouncedStatus = useDebounce(statusInput, 300);
-  const debouncedStartDate = useDebounce(startDateInput, 500);
-  const debouncedEndDate = useDebounce(endDateInput, 500);
 
-  // Update URL on filter change
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
+    // Role filter
+    if (debouncedRole) params.set("role", debouncedRole);
+    else params.delete("role");
+
+    // Status filter
     if (debouncedStatus) params.set("status", debouncedStatus);
     else params.delete("status");
 
-    if (debouncedStartDate) params.set("startDate", debouncedStartDate);
-    else params.delete("startDate");
-
-    if (debouncedEndDate) params.set("endDate", debouncedEndDate);
-    else params.delete("endDate");
 
     params.set("page", "1");
 
-    startTransition(() => {
-      router.push(`?${params.toString()}`);
-    });
-  }, [debouncedStatus, debouncedStartDate, debouncedEndDate]);
+    const newQuery = params.toString();
 
-  // Clear all filters
+    // Prevent unnecessary reload
+    if (newQuery !== searchParams.toString()) {
+      startTransition(() => {
+        router.push(`?${newQuery}`);
+      });
+    }
+  }, [debouncedRole, debouncedStatus]);
+
   const clearFilters = () => {
+    setRoleInput("");
     setStatusInput("");
-    setStartDateInput("");
-    setEndDateInput("");
 
     startTransition(() => {
       router.push(window.location.pathname);
@@ -71,23 +63,41 @@ const TailorFilters = () => {
   };
 
   const activeFiltersCount =
-    (statusInput ? 1 : 0) +
-    (startDateInput ? 1 : 0) +
-    (endDateInput ? 1 : 0);
+    (roleInput ? 1 : 0) +
+    (statusInput ? 1 : 0);
 
   return (
     <div className="space-y-3">
-      {/* Row 1: Search + Refresh */}
+      {/* Row 1 */}
       <div className="flex flex-wrap items-center gap-3">
         <SearchFilter
           paramName="searchTerm"
-          placeholder="Search by name, email, store, contact..."
+          placeholder="Search by name, email or contact..."
         />
         <RefreshButton />
       </div>
 
-      {/* Row 2: Filters */}
+      {/* Row 2 */}
       <div className="flex items-center gap-3 flex-wrap">
+        {/* Role */}
+        <div className="flex flex-col gap-1.5">
+          <Label className="text-xs text-muted-foreground">Role</Label>
+          <Select
+            value={roleInput}
+            onValueChange={(val) => setRoleInput(val === "all" ? "" : val)}
+            disabled={isPending}
+          >
+            <SelectTrigger className="min-w-40 h-10 bg-white placeholder:font-medium">
+              <SelectValue placeholder="Select Role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="ADMIN">Admin</SelectItem>              
+              <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         {/* Status */}
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs text-muted-foreground">Status</Label>
@@ -97,42 +107,18 @@ const TailorFilters = () => {
             disabled={isPending}
           >
             <SelectTrigger className="min-w-40 h-10 bg-white placeholder:font-medium">
-              <SelectValue placeholder="Select status" />
+              <SelectValue placeholder="Select Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="ACTIVE">Active</SelectItem>
-              <SelectItem value="DEACTIVED">Deactive</SelectItem>
-              <SelectItem value="SUSPENDED">Suspended</SelectItem>
+              <SelectItem value="INACTIVE">Inactive</SelectItem>
+              <SelectItem value="DELETED">Deleted</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div>       
 
-        {/* Start Date */}
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs text-muted-foreground">Start Date</Label>
-          <Input
-            type="date"
-            value={startDateInput}
-            onChange={(e) => setStartDateInput(e.target.value)}
-            disabled={isPending}
-            className="h-10 w-44 bg-white shadow-sm"
-          />
-        </div>
-
-        {/* End Date */}
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs text-muted-foreground">End Date</Label>
-          <Input
-            type="date"
-            value={endDateInput}
-            onChange={(e) => setEndDateInput(e.target.value)}
-            disabled={isPending}
-            className="h-10 w-44 bg-white shadow-sm"
-          />
-        </div>
-
-        {/* Clear Filters */}
+        {/* Clear */}
         {activeFiltersCount > 0 && (
           <Button
             variant="ghost"
@@ -149,4 +135,4 @@ const TailorFilters = () => {
   );
 };
 
-export default TailorFilters;
+export default AdminFilters;
