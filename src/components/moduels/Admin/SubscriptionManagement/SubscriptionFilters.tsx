@@ -68,7 +68,7 @@ const SubscriptionFilters = () => {
         startTransition(() => {
             router.push(`?${params.toString()}`);
         });
-    }, [debouncedStatus, debouncedStartDate, debouncedEndDate]);
+    }, [debouncedStatus, debouncedStartDate, debouncedEndDate, router, searchParams]);
 
     const clearFilters = () => {
         setStatusInput("");
@@ -97,7 +97,7 @@ const SubscriptionFilters = () => {
             </div>
 
             {/* Row 2 */}
-            <div className="flex flex-wrap items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-3 flex-wrap">
                 
                 {/* Status */}
                 <div className="flex flex-col gap-1.5">
@@ -111,7 +111,7 @@ const SubscriptionFilters = () => {
                         }
                         disabled={isPending}
                     >
-                        <SelectTrigger className="min-w-[160px] h-10 bg-white placeholder:font-medium">
+                        <SelectTrigger className="min-w-40 h-10 bg-white placeholder:font-medium">
                             <SelectValue placeholder="Subscription Status" />
                         </SelectTrigger>
                         <SelectContent>

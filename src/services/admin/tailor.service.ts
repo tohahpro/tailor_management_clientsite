@@ -4,15 +4,15 @@
 import { serverFetch } from "@/lib/server-fetch";
 
 // Get All Tailors
-export async function getAllTailors(query?: string) {
+export async function getAllTailors(queryString?: string) {
     try {
-        const response = await serverFetch.get(`/tailors${query ? `&${query}` : ""}`);
+        const response = await serverFetch.get(`/tailors${queryString ? `?${queryString}` : ""}`);
 
         return await response.json();
     } catch (error: any) {
         return {
             success: false,
-            message: error?.message || "Failed to fetch users",
+            message: error?.message || "Failed to fetch tailors",
         };
     }
 }

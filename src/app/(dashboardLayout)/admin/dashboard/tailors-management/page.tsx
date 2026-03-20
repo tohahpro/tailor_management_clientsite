@@ -1,3 +1,4 @@
+import TailorFilters from "@/components/moduels/Admin/TailorManagement/TailorFilters";
 import TailorManagementHeader from "@/components/moduels/Admin/TailorManagement/TailorManagementHeader";
 import TailrosTable from "@/components/moduels/Admin/TailorManagement/TailorsTable";
 import PageBackground from "@/components/shared/PageBackgroundColor";
@@ -20,14 +21,15 @@ const TailorManagementPage = async ({
   const totalPages = Math.ceil((TailorResult.meta?.total || 1) / (TailorResult.meta?.limit || 1));
   console.log(TailorResult)
   return (
-    <PageBackground className="bg-gradient-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
+    <PageBackground className="bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
       <div className="space-y-6 p-5">
         <TailorManagementHeader />
         <div className="flex">
           <RefreshButton />
         </div>
-        <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>          
-            <TailrosTable tailors={TailorResult.data} />          
+        <TailorFilters />
+        <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
+          <TailrosTable tailors={TailorResult.data} />
           <TablePagination
             currentPage={TailorResult.meta?.page || 1}
             totalPages={totalPages || 1}

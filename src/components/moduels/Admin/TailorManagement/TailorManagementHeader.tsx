@@ -21,8 +21,8 @@ const TailorManagementHeader = () => {
     return (
         <>          
             <ManagementPageHeader
-                title="Order Management"
-                description="Manage Order information and details"                
+                title="Tailor Management"
+                description="Manage tailor information and details"                
             />
         </>
     );
