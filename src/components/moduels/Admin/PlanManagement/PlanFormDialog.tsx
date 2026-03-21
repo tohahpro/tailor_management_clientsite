@@ -20,6 +20,7 @@ interface IPlan {
     id?: string;
     name: string;
     baseprice: number;
+    tranding: string;
     duration: string;
     description: string;
     maximumOder: number;
@@ -106,7 +107,7 @@ const PlanFormDialog = ({ open, onClose, onSuccess, plan }: Props) => {
                         {/* Duration (Select) */}
                         <Field>
                             <FieldLabel htmlFor="duration">Duration</FieldLabel>
-                            <Select                               
+                            <Select
                                 name="duration"
                                 defaultValue={String(
                                     state?.formData?.duration ?? plan?.duration ?? "MONTHLY"
@@ -120,7 +121,28 @@ const PlanFormDialog = ({ open, onClose, onSuccess, plan }: Props) => {
                                     <SelectItem value="YEARLY">Yearly</SelectItem>
                                     <SelectItem value="WEEKLY">Weekly</SelectItem>
                                 </SelectContent>
-                            </Select>                            
+                            </Select>
+                        </Field>
+
+                        {/* Trending */}
+                        <Field>
+                            <FieldLabel htmlFor="tranding">Trending</FieldLabel>
+
+                            <Select
+                                name="tranding"
+                                defaultValue={String(
+                                    state?.formData?.tranding ?? plan?.tranding ?? "false"
+                                )}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select option" />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                    <SelectItem value="true">Yes</SelectItem>
+                                    <SelectItem value="false">No</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </Field>
 
                         {/* Max Orders */}

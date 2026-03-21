@@ -11,7 +11,7 @@ import RefreshButton from "@/components/shared/RefreshButton";
 const PlanManagementPage = async () => {
 
     const PlanResult = await getAllPlans()
-
+console.log(PlanResult)
     return (
         <PageBackground className="bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
             <div className="space-y-6 p-5">

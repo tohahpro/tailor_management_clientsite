@@ -25,6 +25,23 @@ export async function getAllSubscriptions(queryString?: string) {
     }
 }
 
+export async function getMySubscriptions(queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/subscription/my-subscriptions${queryString ? `?${queryString}` : ""}`,
+            { cache: "no-store" }
+        );
+
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.message || "Failed to fetch my subscriptions",
+        };
+    }
+}
+
 
 // ✅ UPDATE SUBSCRIPTION (PLAN / MAX ORDER / STATUS)
 export async function updateSubscription(

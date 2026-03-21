@@ -10,6 +10,7 @@ export async function createPlan(prevState: any, formData: FormData) {
     const payload = {
         name: formData.get("name"),
         baseprice: Number(formData.get("baseprice")),
+        tranding: formData.get("tranding") === "true",
         duration: formData.get("duration"),
         maximumOder: Number(formData.get("maximumOder")),
         description: formData.get("description"),
@@ -58,6 +59,21 @@ export async function getAllPlans() {
     }
 }
 
+export async function getAllActivePlans() {
+    try {
+        const response = await serverFetch.get("/plan/active", {
+            cache: "no-cache",
+        });
+
+        return await response.json();
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.message || "Failed to fetch plans",
+        };
+    }
+}
+
 
 // GET SINGLE PLAN
 export async function getSinglePlan(planId: string) {
@@ -83,6 +99,7 @@ export async function updatePlan(
         name: formData.get("name"),
         baseprice: Number(formData.get("baseprice")),
         duration: formData.get("duration"),
+        tranding: formData.get("tranding") === "true",
         maximumOder: Number(formData.get("maximumOder")),
         description: formData.get("description"),
     };

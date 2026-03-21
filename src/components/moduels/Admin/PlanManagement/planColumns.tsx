@@ -38,6 +38,15 @@ export const planColumns: Column<IPlan>[] = [
     },
 
     {
+        header: "Trending",
+        accessor: (plan) => (
+            <span className="font-medium">
+                {plan.tranding  ? "Yes" : "No"}
+            </span>
+        ),
+    },
+
+    {
         header: "Status",
         accessor: (plan) => (
             <PlanStatusBadge

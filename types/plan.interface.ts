@@ -3,6 +3,7 @@ export interface IPlan {
     name: string;
     baseprice: number;
     duration: string;
+    tranding: string;
     isActive: boolean;
     description: string;
     maximumOder: number;

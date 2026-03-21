@@ -41,7 +41,7 @@ export const subscriptionColumns: Column<ISubscription>[] = [
     },
 
     {
-        header: "Plan",
+        header: "Plan Name",
         accessor: (subscription) => (
             <div className="flex flex-col">
                 <span className="font-medium">
