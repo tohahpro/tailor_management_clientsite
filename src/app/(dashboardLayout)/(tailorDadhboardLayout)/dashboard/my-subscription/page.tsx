@@ -1,6 +1,6 @@
 import MySubscriptionFilters from "@/components/moduels/Tailors/MySubscriptionManagement/MySubscriptionFilters";
 import MySubscriptionManagementHeader from "@/components/moduels/Tailors/MySubscriptionManagement/MySubscriptionManagementHeader";
-import MySubscriptionTable from "@/components/moduels/Tailors/MySubscriptionManagement/MySubscriptionTable";
+import MySubscriptionCards from "@/components/moduels/Tailors/Subscription/MySubscriptionCards";
 import PageBackground from "@/components/shared/PageBackgroundColor";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
@@ -26,7 +26,7 @@ const MySubscriptionManagementPage = async ({
 
                 <MySubscriptionFilters />
                 <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
-                    <MySubscriptionTable subscriptions={subscriptionResult.data} />
+                    <MySubscriptionCards subscriptions={subscriptionResult.data} />
                     <TablePagination
                         currentPage={subscriptionResult.meta?.page || 1}
                         totalPages={totalPages || 1}

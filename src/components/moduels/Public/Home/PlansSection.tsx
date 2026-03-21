@@ -67,6 +67,7 @@ export default function PlansSection() {
       {plans.map((plan: any) => (
         <PlanCard
           key={plan.id}
+          id={plan.id}
           name={plan.name}
           description={plan.description}
           price={plan.baseprice}

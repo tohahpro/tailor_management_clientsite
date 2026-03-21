@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface Props {
+    id: string;
     name: string;
     description: string;
     price: number;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function PlanCard({
+    id,
     name,
     description,
     price,
@@ -52,8 +54,8 @@ export default function PlanCard({
                 {/* Button */}
                 {
                     price > 0 &&
-                    <Link href="" >
-                        <Button className="w-full hover:cursor-pointer bg-black text-white py-2 rounded-full font-medium hover:bg-gray-900 transition">
+                    <Link href={`/plans/${id}`}>
+                        <Button className="w-full bg-black text-white py-2 rounded-full hover:bg-gray-900">
                             Premium Access
                         </Button>
                     </Link>
