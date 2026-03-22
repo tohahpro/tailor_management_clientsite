@@ -42,7 +42,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
   // }
 
   return (
-    <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-3 sm:gap-4 lg:items-center lg:justify-center">
 
       {/* Pagination controls */}
       <div className="flex flex-wrap items-center justify-center gap-2">

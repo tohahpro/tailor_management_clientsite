@@ -1,7 +1,6 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -13,10 +12,10 @@ import {
     CreditCard,
     Loader2,
     Package,
-    DollarSign,
-    ArrowLeft,
+    DollarSign
 } from "lucide-react";
 import { createSubscription } from "@/services/tailors/subscriptionManagement";
+import { capitalizeText } from "@/lib/formatters";
 
 interface Plan {
     id: string;
@@ -69,7 +68,7 @@ export default function SubscriptionConfirmation({ plan }: Props) {
         }
     };
 
-    // ✅ SUCCESS SCREEN
+    // SUCCESS SCREEN
     if (success) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-white">
@@ -95,15 +94,9 @@ export default function SubscriptionConfirmation({ plan }: Props) {
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white px-4 py-8">
             <div className="max-w-5xl mx-auto space-y-6">
 
-                {/* 🔙 Header */}
+                {/* Header */}
                 <div className="flex items-center gap-3">
-                    {/* <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => router.back()}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button> */}
+                    
 
                     <div className="mx-auto">
                         <h1 className="text-3xl font-bold">Confirm Subscription</h1>
@@ -144,7 +137,7 @@ export default function SubscriptionConfirmation({ plan }: Props) {
 
                                 <div className="flex justify-between">
                                     <span>Duration</span>
-                                    <span>{plan.duration}</span>
+                                    <span className="font-medium">{capitalizeText(plan.duration)}</span>
                                 </div>
 
                                 <div className="flex justify-between">
@@ -210,7 +203,6 @@ export default function SubscriptionConfirmation({ plan }: Props) {
                                 </div>
                             </div>
 
-                            {/* 🔘 Actions */}
                             <div className="space-y-3 pt-2 flex gap-4">
 
                                 

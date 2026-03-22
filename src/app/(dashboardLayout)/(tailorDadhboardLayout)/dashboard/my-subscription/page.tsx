@@ -27,10 +27,12 @@ const MySubscriptionManagementPage = async ({
                 <MySubscriptionFilters />
                 <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                     <MySubscriptionCards subscriptions={subscriptionResult.data} />
-                    <TablePagination
-                        currentPage={subscriptionResult.meta?.page || 1}
-                        totalPages={totalPages || 1}
-                    />
+                    <div className="">
+                        <TablePagination
+                            currentPage={subscriptionResult.meta?.page || 1}
+                            totalPages={totalPages || 1}
+                        />
+                    </div>
                 </Suspense>
             </div>
         </PageBackground>
