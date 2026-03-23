@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { updateOrderStatus } from "@/services/tailors/order.service";
+import { Loader2, Clock, Scissors, Ruler, CheckCircle, Truck } from "lucide-react";
 
 type OrderStatus = "PENDING" | "CUTTING" | "SEWING" | "COMPLETED" | "DELIVERED";
 
@@ -46,41 +47,45 @@ export default function OrderStatusBadgeDropdown({ orderId, currentStatus }: Pro
     }
   };
 
-  const getBadgeColor = (s: OrderStatus) => {
-    switch (s) {
-      case "PENDING":
-        // return "bg-[#FEE8DB] text-[#70370c]";
-        return "bg-amber-100 text-amber-900";
-      case "CUTTING":
-        // return "bg-[#E0E7FF] text-[#4F46E5]";
-        return "bg-[#FEE8DB] text-[#70370c]";
-      case "SEWING":
-        return "bg-[#E8D5FF] text-[#7C3AED]";
-        // return "bg-emerald-100 text-emerald-800";
-      case "COMPLETED":
-        return "bg-emerald-100 text-emerald-800";
-      case "DELIVERED":
-        // return "bg-stone-100 text-stone-800";
-        return "bg-[#C4D9FF] text-[#0D1A63]";
-    }
+  const statusConfig: Record<OrderStatus, { bg: string; text: string; icon: any }> = {
+    PENDING: { bg: "bg-amber-100", text: "text-amber-900", icon: Clock },
+    CUTTING: { bg: "bg-[#FEE8DB]", text: "text-[#70370c]", icon: Scissors },
+    SEWING: { bg: "bg-[#E8D5FF]", text: "text-[#7C3AED]", icon: Ruler },
+    COMPLETED: { bg: "bg-emerald-100", text: "text-emerald-800", icon: CheckCircle },
+    DELIVERED: { bg: "bg-[#C4D9FF]", text: "text-[#0D1A63]", icon: Truck },
   };
 
   return (
     <Select value={status} onValueChange={handleChange} disabled={isLoading}>
       <SelectTrigger
-        className={`flex items-center justify-center rounded-md text-sm font-medium transition ${
-          isLoading ? "opacity-50 cursor-wait" : getBadgeColor(status)
-        }`}
+        className={`
+          flex items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-sm font-semibold transition-all duration-200
+          ${isLoading ? "opacity-50 cursor-wait" : statusConfig[status].bg + " " + statusConfig[status].text}
+          hover:scale-105 hover:shadow-md
+        `}
       >
-        <SelectValue placeholder="Select status" />
+        {isLoading ?
+          <Loader2 className="w-4 h-4 animate-spin" />
+          :
+          <SelectValue placeholder="Select status" />
+        }
       </SelectTrigger>
 
-      <SelectContent>
-        <SelectItem value="PENDING">Pending</SelectItem>
-        <SelectItem value="CUTTING">Cutting</SelectItem>
-        <SelectItem value="SEWING">Sewing</SelectItem>
-        <SelectItem value="COMPLETED">Completed</SelectItem>
-        <SelectItem value="DELIVERED">Delivered</SelectItem>
+      <SelectContent className="rounded-xl border shadow-lg">
+        {Object.keys(statusConfig).map((key) => {
+          const s = key as OrderStatus;
+          const IconComp = statusConfig[s].icon;
+          return (
+            <SelectItem
+              key={s}
+              value={s}
+              className="flex items-center px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
+            >
+              <IconComp className="w-4 h-4" />
+              {s.charAt(0) + s.slice(1).toLowerCase()}
+            </SelectItem>
+          );
+        })}
       </SelectContent>
     </Select>
   );
