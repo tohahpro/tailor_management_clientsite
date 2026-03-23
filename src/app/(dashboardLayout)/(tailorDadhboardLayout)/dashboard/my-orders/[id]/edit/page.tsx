@@ -1,5 +1,6 @@
 
 import OrderEditForm from "@/components/moduels/Tailors/OrderManagement/OrderEditForm";
+import PageBackground from "@/components/shared/PageBackgroundColor";
 import { getAllCategories } from "@/services/tailors/category.service";
 import { getOrderById } from "@/services/tailors/order.service";
 
@@ -8,18 +9,19 @@ interface Params {
 }
 
 export default async function EditOrderPage({ params }: Params) {
-  
-  const { id } = await params; 
+
+  const { id } = await params;
   const order = await getOrderById(id);
   const categories = await getAllCategories();
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-6">✏️ Edit Order</h2>
+
+    <PageBackground className="p-6 bg-linear-to-br from-[#fcf9ff] via-[#f0e4ff] to-[#d0abfd]">
       <OrderEditForm
         order={order.data}
         categories={categories}
       />
-    </div>
+    </PageBackground>
+
   );
 }
