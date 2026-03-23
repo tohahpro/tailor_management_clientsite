@@ -49,14 +49,18 @@ export default function OrderStatusBadgeDropdown({ orderId, currentStatus }: Pro
   const getBadgeColor = (s: OrderStatus) => {
     switch (s) {
       case "PENDING":
-        return "bg-[#FEE8DB] text-[#70370c]";
+        // return "bg-[#FEE8DB] text-[#70370c]";
+        return "bg-amber-100 text-amber-900";
       case "CUTTING":
-        return "bg-[#E0E7FF] text-[#4F46E5]";
+        // return "bg-[#E0E7FF] text-[#4F46E5]";
+        return "bg-[#FEE8DB] text-[#70370c]";
       case "SEWING":
         return "bg-[#E8D5FF] text-[#7C3AED]";
+        // return "bg-emerald-100 text-emerald-800";
       case "COMPLETED":
-        return "bg-[#46c969] text-[#09491a]";
+        return "bg-emerald-100 text-emerald-800";
       case "DELIVERED":
+        // return "bg-stone-100 text-stone-800";
         return "bg-[#C4D9FF] text-[#0D1A63]";
     }
   };

@@ -32,7 +32,7 @@ export const categoryColumns: Column<IClothCategory>[] = [
             />
           ) : (
             <AvatarFallback className="bg-white dark:bg-muted flex items-center justify-center">
-              <Shirt className="h-10 w-10 text-purple-600" />
+              <Shirt className="text-purple-600" />
             </AvatarFallback>
           )}
         </Avatar>

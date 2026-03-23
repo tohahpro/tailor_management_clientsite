@@ -77,6 +77,7 @@ const CategoryEditFormDialog = ({
                 ),
                 file: selectedFile || undefined,
             };
+            console.log(payload)
             const result = await updateCategory(category.id, payload);
 
             if (result.success) {

@@ -40,8 +40,10 @@ export interface IOrderItem {
     clothCategory: {
         id: string;
         name: string;
+        image: string;
     };
     measurements?: IOrderMeasurement[];
+    notes: IOrderNote;
 }
 
 export interface IOrderNote {
@@ -60,6 +62,13 @@ export interface ICreateOrderPayload {
     // notes?: IOrderNote[];
 }
 
+export interface Tailor {
+  id: string
+  name: string
+  email: string
+  contactNumber: string
+}
+
 export interface IOrder {
     id: string;
     orderNumber: number;
@@ -69,6 +78,7 @@ export interface IOrder {
     totalAmount: number;
     paidAmount: number;
     dueAmount: number;
+    tailor: Tailor;
     status: "PENDING" |"CUTTING" |"SEWING"| "COMPLETED" | "DELIVERED";
     createdAt: string;
     items: IOrderItem[];
