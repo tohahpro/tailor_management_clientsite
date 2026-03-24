@@ -40,77 +40,79 @@ export default function MySubscriptionCards({ subscriptions }: Props) {
                 {subscriptions.map((sub) => (
                     <Card
                         key={sub.id}
-                        className="p-5 rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-all"
+                        className="relative p-5 rounded-3xl border border-gray-100 bg-white/70 backdrop-blur-xl shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden"
                     >
+                        {/* 🔥 Top Gradient Glow */}
+                        <div className="absolute top-0 left-0 w-full h-20 bg-linear-to-r from-[#8f43ec]/20 via-[#8545d3]/20 to-[#4e1e8a]/20 opacity-70 group-hover:opacity-100 transition" />
+
                         {/* Header */}
-                        <div className="flex justify-between items-start mb-3">
+                        <div className="flex justify-between items-start mb-4 relative z-10">
                             <div>
-                                <h2 className="text-lg font-semibold">
+                                <h2 className="text-lg font-bold text-gray-800">
                                     {sub.plan?.name || "N/A"}
                                 </h2>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-gray-500 mt-0.5">
                                     {sub.plan?.duration}
                                 </p>
                             </div>
 
-                            <Badge className={getStatusStyle(sub.status)}>
+                            <Badge className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${getStatusStyle(sub.status)}`}>
                                 {sub.status}
                             </Badge>
                         </div>
 
-                        {/* Price */}
-                        <div className="mb-4">
-                            <p className="text-2xl font-bold text-primary">
+                        {/* 💰 Price */}
+                        <div className="relative z-10">
+                            <p className="text-3xl font-extrabold bg-linear-to-r from-[#8f43ec] to-[#4e1e8a] bg-clip-text text-transparent">
                                 ৳{sub.totalPrice}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-500 mt-1">
                                 Total Payment
                             </p>
                         </div>
 
-                        {/* Info */}
-                        <div className="space-y-1 text-sm mb-4">
-                            <div className="flex justify-between">
-                                <span>Max Orders</span>
-                                <span>{sub.maxOrderLimit}</span>
+                        {/* 📊 Info */}
+                        <div className="space-y-1 text-sm relative z-10">
+                            <div className="flex justify-between bg-gray-50 px-3 py-1.5 rounded-md">
+                                <span className="text-gray-600">Max Orders</span>
+                                <span className="font-medium">{sub.maxOrderLimit}</span>
                             </div>
 
-                            <div className="flex justify-between">
-                                <span>Start</span>
+                            <div className="flex justify-between bg-gray-50 px-3 py-1.5 rounded-md">
+                                <span className="text-gray-600">Start</span>
                                 <span>
                                     {format(new Date(sub.startDate), "dd MMM yyyy")}
                                 </span>
                             </div>
 
-                            <div className="flex justify-between">
-                                <span>End</span>
+                            <div className="flex justify-between bg-gray-50 px-3 py-1.5 rounded-md">
+                                <span className="text-gray-600">End</span>
                                 <span>
                                     {format(new Date(sub.endDate), "dd MMM yyyy")}
                                 </span>
                             </div>
                         </div>
 
-                        {/* Action */}
-                        <div className="flex gap-2">
+                        {/* ⚡ Action */}
+                        <div className="flex gap-3 relative z-10">
                             <Button
                                 variant="outline"
-                                className="flex-1 flex items-center gap-2"
+                                className="flex-1 flex items-center justify-center gap-2 rounded-md hover:bg-gray-100 transition"
                                 onClick={() => setViewingSubscription(sub)}
                             >
                                 <Eye className="h-4 w-4" />
-                                View Details
+                                View
                             </Button>
-                            {sub.status === "DEACTIVED" &&
-                                <Link href={`/plans/payment/${sub.plan?.id}`}>
+
+                            {sub.status === "DEACTIVED" && (
+                                <Link href={`/plans/payment/${sub.plan?.id}`} className="flex-1">
                                     <Button
-                                        variant="outline"
-                                        className="flex-1 flex items-center gap-2"
+                                        className="w-full flex items-center justify-center gap-2 rounded-md bg-linear-to-r from-[#8f43ec] to-[#4e1e8a] text-white hover:opacity-90 transition"
                                     >
-                                        Premium Access
+                                        Payment
                                     </Button>
                                 </Link>
-
-                            }
+                            )}
                         </div>
                     </Card>
                 ))}

@@ -47,6 +47,7 @@ export interface IOrderItem {
 }
 
 export interface IOrderNote {
+    map: any;
     length: number;    
     id?: string;
     content: string;
