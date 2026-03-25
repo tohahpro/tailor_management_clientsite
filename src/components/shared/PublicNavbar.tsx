@@ -10,8 +10,8 @@ import BrandLogo from "./BrandLogo";
 const PublicNavbar = async () => {
     const navItems = [
         { href: "/about", label: "About" },
-        { href: "/features", label: "Features" },
-        { href: "/price-plan", label: "Price Plan" },
+        { href: "#features", label: "Features" },
+        { href: "#pricing", label: "Price Plan" },
     ];
 
     const accessToken = await getCookie("accessToken");

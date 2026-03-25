@@ -6,8 +6,8 @@ import {
   PhoneIcon,
   UserIcon,
 } from 'lucide-react'
-import { IOrder } from '../../../../../types/order.interface'
-import OrderStatusBadgeDropdown from './OrderStatus'
+import { IOrder } from '../../../../../../types/order.interface'
+import OrderStatusBadgeDropdown from '../OrderStatus'
 
 interface OrderHeaderProps {
   order: IOrder
@@ -80,7 +80,7 @@ export function OrderHeader({ order }: OrderHeaderProps) {
           </div>
         </div>
 
-        <div className="bg-white flex-1 rounded-2xl border border-stone-200 shadow-sm p-6 relative overflow-hidden group">
+        <div className="bg-white flex-1 rounded-2xl border border-stone-200 shadow-sm p-6 relative overflow-hidden group mt-5 md:mt-0">
           <div className="absolute top-0 right-0 w-32 h-32 bg-stone-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110 duration-500"></div>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-stone-100 text-stone-700 rounded-lg">

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { FinancialSummary } from "@/components/moduels/Tailors/OrderManagement/FinancialSummary";
-import { OrderHeader } from "@/components/moduels/Tailors/OrderManagement/orderHeader";
-import { OrderItemCard } from "@/components/moduels/Tailors/OrderManagement/OrderItemCard";
+import { FinancialSummary } from "@/components/moduels/Tailors/OrderManagement/OrderDetails/FinancialSummary";
+import { OrderHeader } from "@/components/moduels/Tailors/OrderManagement/OrderDetails/orderHeader";
+import { OrderItemCard } from "@/components/moduels/Tailors/OrderManagement/OrderDetails/OrderItemCard";
+
 import { getOrderById } from "@/services/tailors/order.service";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

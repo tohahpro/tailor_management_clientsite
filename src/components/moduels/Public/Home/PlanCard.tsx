@@ -7,73 +7,93 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface Props {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    duration: string;
-    features: string[];
-    popular?: boolean;
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  duration: string;
+  features: string[];
+  popular?: boolean;
 }
 
 export default function PlanCard({
-    id,
-    name,
-    description,
-    price,
-    duration,
-    features,
-    popular,
+  id,
+  name,
+  description,
+  price,
+  duration,
+  features,
+  popular,
 }: Props) {
-    return (
-        <Card className="relative rounded-3xl p-3 shadow-lg bg-[#f7f0f0] border border-gray-200 hover:shadow-2xl transition-all">
+  return (
+    <Card
+      className={`relative rounded-2xl p-0.5 transition-all duration-300
+  ${popular
+          ? "bg-linear-to-r from-[#8f43ec] via-[#8545d3] to-[#4e1e8a] shadow-2xl md:-mt-6 md:mb-6 scale-105"
+          : "bg-white/40 backdrop-blur-md hover:shadow-xl"
+        }`}
+    >
+      {/* Inner Content */}
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 h-full flex flex-col justify-between">
 
-            <div className="bg-[#FFFFFF] rounded-2xl p-3">
-                {/* Trending Badge */}
-                {popular && (
-                    <Badge className="absolute top-5 right-5 bg-red-500 text-white px-2 rounded-full">
-                        Polular
-                    </Badge>
-                )}
+        {/* Popular Badge */}
+        {popular && (
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Badge className="bg-linear-to-r from-[#8f43ec] to-[#4e1e8a] text-white px-3 py-1 text-xs rounded-full shadow-lg">
+              Most Popular
+            </Badge>
+          </div>
+        )}
 
-                {/* Icon */}
-                <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-gray-100 shadow-sm mb-4">
-                    ✿
-                </div>
+        {/* 📌 Title */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-heading font-bold text-black">
+            {name}
+          </h2>
+          <p className="text-sm text-slate-500 mt-1 h-10">
+            {description}
+          </p>
+        </div>
 
-                {/* Title */}
-                <h2 className="text-xl font-semibold mb-1">{name}</h2>
-                <p className="text-sm text-gray-500 mb-4">{description}</p>
+        {/* 💰 Price */}
+        <div className="mb-6">
+          <div className="flex items-end gap-1">
+            <span className="text-5xl font-extrabold text-black">
+              ৳{price}
+            </span>
+            <span className="text-slate-500 text-sm mb-1">
+              /{duration.toLowerCase()}
+            </span>
+          </div>
+        </div>
 
-                {/* Price */}
-                <div className="mb-4">
-                    <span className="text-4xl font-bold">৳{price}</span>
-                    <span className="text-gray-500 text-sm"> /{duration.toLowerCase()}</span>
-                </div>
+        {/* ✅ Features */}
+        <ul className="space-y-3 mb-8 min-h-32">
+          {features.map((feature, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <div className="mt-1 flex items-center justify-center w-5 h-5 rounded-full bg-linear-to-br from-[#8f43ec]/10 to-[#4e1e8a]/10">
+                <Check className="h-3.5 w-3.5 text-[#8f43ec]" />
+              </div>
+              <span className="text-sm text-slate-600">{feature}</span>
+            </li>
+          ))}
+        </ul>
 
-                {/* Button */}
-                {
-                    price > 0 &&
-                    <Link href={`/plans/${id}`}>
-                        <Button className="w-full bg-black text-white py-2 rounded-full hover:bg-gray-900">
-                            Premium Access
-                        </Button>
-                    </Link>
-                }
-
-            </div>
-
-
-
-            {/* Features */}
-            <div className="mt-6 space-y-3 text-sm">
-                {features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-black" />
-                        <span>{feature}</span>
-                    </div>
-                ))}
-            </div>
-        </Card>
-    );
+        {/* 🚀 Button */}
+        {price > 0 && (
+          <Link href={`/plans/${id}`}>
+            <Button
+              className={`w-full py-3 cursor-pointer rounded-lg font-medium transition-all
+          ${popular
+                  ? "bg-linear-to-r from-[#8f43ec] via-[#8545d3] to-[#4e1e8a] text-white hover:opacity-90 shadow-lg"
+                  : "bg-slate-100 text-black hover:bg-slate-200"
+                }`}
+            >
+              Premium Access
+            </Button>
+          </Link>
+        )}
+      </div>
+    </Card>
+  );
 }

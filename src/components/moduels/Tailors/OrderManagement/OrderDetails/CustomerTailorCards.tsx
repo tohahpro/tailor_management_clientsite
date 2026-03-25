@@ -1,6 +1,6 @@
 
 import { UserIcon, PhoneIcon } from 'lucide-react'
-import { IOrder } from '../../../../../types/order.interface'
+import { IOrder } from '../../../../../../types/order.interface'
 
 
 interface CustomerTailorCardsProps {

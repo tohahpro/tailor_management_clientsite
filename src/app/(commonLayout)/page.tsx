@@ -1,13 +1,24 @@
-import PlansSection from "@/components/moduels/Public/Home/PlansSection";
+import { CTASection } from "@/components/moduels/Public/Home/CTASection";
+import { FeaturesSection } from "@/components/moduels/Public/Home/FeaturesSection";
+import { HeroSection } from "@/components/moduels/Public/Home/HeroSection";
+import { HowItWorks } from "@/components/moduels/Public/Home/HowItWorks";
+import PricingSection from "@/components/moduels/Public/Home/PricingSection";
+import { StatsBar } from "@/components/moduels/Public/Home/StatsBar";
 
 
 const HomePage = () => {
 
     return (
-        <>
-            <div>HomePage</div>
-            <div className="container mx-auto px-5">
-                <PlansSection />
+        <>            
+            <div>
+
+                <HeroSection />
+                <StatsBar />
+                <FeaturesSection />
+                <HowItWorks />
+                <PricingSection />
+                <CTASection />
+
             </div>
         </>
     );

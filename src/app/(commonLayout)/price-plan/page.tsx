@@ -1,4 +1,4 @@
-import PlansSection from "@/components/moduels/Public/Home/PlansSection";
+import PlansSection from "@/components/moduels/Public/Home/PricingSection";
 
 
 const PricePlanPage = () => {
